@@ -1,0 +1,42 @@
+List<String> maincateg = [
+  'select category',
+  'Plumber',
+  'Technician',
+  'Electrician',
+  'Home Cleaning',
+  'Gardener',
+];
+
+List<String> Plumber = [
+  'subcategory',
+  'Indoor',
+  'Outdoor',
+  'other'
+];
+List<String> Technician = [
+  'subcategory',
+  'other'
+];
+List<String> Electrician = [
+  'Wiring',
+  'Small Appliances',
+  'Big Appliances',
+  'other'
+];
+
+List<String> HomeCleaning = [
+  'subcategory',
+  'Indoor',
+  'Outdoor',
+  'Inside Out',
+  'other'
+];
+
+List<String> Gardener = [
+  'subcategory',
+  'Small Garden',
+  'Big Garden',
+  'Landscapper',
+  'other'
+];
+
