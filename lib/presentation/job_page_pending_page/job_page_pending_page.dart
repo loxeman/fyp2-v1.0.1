@@ -6,8 +6,6 @@ import 'package:fyp2/widgets/custom_button.dart';
 
 // ignore_for_file: must_be_immutable
 class JobPagePendingPage extends StatelessWidget {
-  JobPagePendingController controller =
-      Get.put(JobPagePendingController(JobPagePendingModel().obs));
 
   @override
   Widget build(BuildContext context) {

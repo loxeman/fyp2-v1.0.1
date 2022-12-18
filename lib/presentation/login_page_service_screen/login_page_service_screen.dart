@@ -81,7 +81,7 @@ class _LoginPageServiceScreen extends State<LoginPageServiceScreen> {
 
           await Future.delayed(const Duration(milliseconds: 100))
               .whenComplete(() {
-            Navigator.of(context).pushReplacementNamed('/supplier_home');
+            Navigator.of(context).pushReplacementNamed('/navbarserviceprovider_screen');
           });
         } else {
           MyMessageHandler.showSnackBar(
@@ -251,7 +251,7 @@ class _LoginPageServiceScreen extends State<LoginPageServiceScreen> {
                       Align(
                           alignment: Alignment.center,
                           child: Padding(
-                              padding: getPadding(left: 14, top: 70, right: 14),
+                              padding: getPadding(left: 14, top: 20, right: 14),
                               child: Text("msg_or_login_with_social".tr,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,

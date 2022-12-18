@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       fallbackLocale: Locale('en', 'US'),
       title: 'fyp2',
       initialBinding: InitialBindings(),
-      initialRoute: AppRoutes.initialRoute,
+      initialRoute: AppRoutes.welcomePageScreen,
       getPages: AppRoutes.pages,
     );
   }

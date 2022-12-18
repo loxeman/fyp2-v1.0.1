@@ -21,17 +21,8 @@ class AuthController extends GetxController{
     _user = Rx<User?>(auth.currentUser);
     //our user would be notified
     _user.bindStream(auth.userChanges());
-    ever(_user, _initialScreen);
   }
 
-  _initialScreen(User? user){
-    if(user==null){
-      print("login page");
-      //Get.offAll(()=>LoginPage());
-    }else{
-      Get.offAll(()=>HomeScreen());
-    }
-  }
 
   void register(String email, password)async{
     try{

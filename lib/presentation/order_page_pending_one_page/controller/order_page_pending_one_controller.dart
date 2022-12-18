@@ -4,7 +4,7 @@ import 'package:fyp2/presentation/order_page_pending_one_page/models/order_page_
 class OrderPagePendingOneController extends GetxController {
   OrderPagePendingOneController(this.orderPagePendingOneModelObj);
 
-  Rx<OrderPagePendingOneModel> orderPagePendingOneModelObj;
+  Rx<OrderPageOngoingModel> orderPagePendingOneModelObj;
 
   @override
   void onReady() {

@@ -7,10 +7,11 @@ import 'package:fyp2/theme/app_style.dart';
 import 'package:fyp2/widgets/custom_button.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
-class OrderPageOngoingModel extends StatelessWidget {
+class OrderPageCompleteModel extends StatelessWidget {
 
 final dynamic order;
-const OrderPageOngoingModel({Key? key, required this.order}) : super(key: key);
+const OrderPageCompleteModel({Key? key, required this.order}) : super(key: key);
+
 
 @override
 Widget build(BuildContext context) {
@@ -147,69 +148,6 @@ Widget build(BuildContext context) {
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: AppStyle.txtRobotoRomanLight11,
-                  ),
-                ),
-                Container(
-                  width: getHorizontalSize(
-                    237.00,
-                  ),
-                  margin: getMargin(
-                    top: 1,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: getPadding(
-                          bottom: 8,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "msg_appointment_time".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoRomanLight11,
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                left: 1,
-                                right: 10,
-                              ),
-                              child: Text(
-                                "msg_location_gombak".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: AppStyle.txtRobotoRomanLight11,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      CustomButton(
-                        width: 62,
-                        onTap: ()async {
-                          await FirebaseFirestore.instance
-                              .collection('order')
-                              .doc(order['orderid'])
-                              .update({
-                            'status': 'complete',
-                          });
-                        },
-                        text: "lbl_complete".tr,
-                        margin: getMargin(
-                          top: 10,
-                        ),
-                        shape: ButtonShape.CircleBorder12,
-                        padding: ButtonPadding.PaddingAll3,
-                        fontStyle: ButtonFontStyle.RobotoRomanMedium10,
-                      ),
-                    ],
                   ),
                 ),
               ],

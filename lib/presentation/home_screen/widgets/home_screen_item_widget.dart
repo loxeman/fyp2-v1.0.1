@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:fyp2/core/app_export.dart';
 
 // ignore: must_be_immutable
-class HomeScreenItemWidget extends StatelessWidget {
-  HomeScreenItemWidget(this.homeScreenItemModelObj);
+class CustomerHomeScreenItemWidget extends StatelessWidget {
+  CustomerHomeScreenItemWidget(this.CustomerHomeScreenItemModelObj);
 
-  HomeScreenItemModel homeScreenItemModelObj;
+  CustomerHomeScreenItemModel CustomerHomeScreenItemModelObj;
 
-  var controller = Get.find<HomeController>();
+  var controller = Get.find<CustomerHomeScreenController>();
 
   @override
   Widget build(BuildContext context) {

@@ -1,1 +1,1 @@
-class HomeScreenItemModel {}
+class CustomerHomeScreenItemModel {}

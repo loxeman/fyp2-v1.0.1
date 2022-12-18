@@ -45,7 +45,7 @@ class WalletPageScreen extends GetWidget<WalletPageController> {
                       alignment: Alignment.center,
                       child: Padding(
                           padding: getPadding(
-                              left: 14, top: 68, right: 14, bottom: 419),
+                              left: 14, top: 68, right: 14),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,

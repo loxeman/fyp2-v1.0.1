@@ -2,14 +2,13 @@ import 'package:fyp2/presentation/home_screen/home_screen.dart';
 import 'package:fyp2/presentation/home_screen/binding/home_binding.dart';
 import 'package:fyp2/presentation/navbar/Binding/navbar_binding.dart';
 import 'package:fyp2/presentation/navbar/navbar.dart';
+import 'package:fyp2/presentation/navbar_serviceprovider/navbar_serviceprovider.dart';
 import 'package:fyp2/presentation/sign_up_page_customer_screen/sign_up_page_customer_screen.dart';
 import 'package:fyp2/presentation/sign_up_page_customer_screen/binding/sign_up_page_customer_binding.dart';
 import 'package:fyp2/presentation/login_page_customer_screen/login_page_customer_screen.dart';
 import 'package:fyp2/presentation/login_page_customer_screen/binding/login_page_customer_binding.dart';
 import 'package:fyp2/presentation/forget_password_page_screen/forget_password_page_screen.dart';
 import 'package:fyp2/presentation/forget_password_page_screen/binding/forget_password_page_binding.dart';
-import 'package:fyp2/presentation/splashscreen_page_screen/splashscreen_page_screen.dart';
-import 'package:fyp2/presentation/splashscreen_page_screen/binding/splashscreen_page_binding.dart';
 import 'package:fyp2/presentation/login_page_service_screen/login_page_service_screen.dart';
 import 'package:fyp2/presentation/login_page_service_screen/binding/login_page_service_binding.dart';
 import 'package:fyp2/presentation/sign_up_page_service_screen/sign_up_page_service_screen.dart';
@@ -30,8 +29,6 @@ import 'package:fyp2/presentation/wallet_page_screen/wallet_page_screen.dart';
 import 'package:fyp2/presentation/wallet_page_screen/binding/wallet_page_binding.dart';
 import 'package:fyp2/presentation/serviie_provider_page_available_screen/serviie_provider_page_available_screen.dart';
 import 'package:fyp2/presentation/serviie_provider_page_available_screen/binding/serviie_provider_page_available_binding.dart';
-import 'package:fyp2/presentation/order_page_pending_tab_container_screen/order_page_pending_tab_container_screen.dart';
-import 'package:fyp2/presentation/order_page_pending_tab_container_screen/binding/order_page_pending_tab_container_binding.dart';
 import 'package:fyp2/presentation/serviice_provider_page_available_screen/serviice_provider_page_available_screen.dart';
 import 'package:fyp2/presentation/serviice_provider_page_available_screen/binding/serviice_provider_page_available_binding.dart';
 import 'package:fyp2/presentation/category_page_screen/category_page_screen.dart';
@@ -40,8 +37,6 @@ import 'package:fyp2/presentation/edit_store_page_screen/edit_store_page_screen.
 import 'package:fyp2/presentation/edit_store_page_screen/binding/edit_store_page_binding.dart';
 import 'package:fyp2/presentation/setting_page_screen/setting_page_screen.dart';
 import 'package:fyp2/presentation/setting_page_screen/binding/setting_page_binding.dart';
-import 'package:fyp2/presentation/serviice_provider_page_not_available_screen/serviice_provider_page_not_available_screen.dart';
-import 'package:fyp2/presentation/serviice_provider_page_not_available_screen/binding/serviice_provider_page_not_available_binding.dart';
 import 'package:fyp2/presentation/edit_service_page_one_screen/edit_service_page_one_screen.dart';
 import 'package:fyp2/presentation/edit_service_page_one_screen/binding/edit_service_page_one_binding.dart';
 import 'package:fyp2/presentation/edit_profile_page_screen/edit_profile_page_screen.dart';
@@ -52,13 +47,19 @@ import 'package:fyp2/presentation/add_service_page_screen/add_service_page_scree
 import 'package:fyp2/presentation/add_service_page_screen/binding/add_service_page_binding.dart';
 import 'package:fyp2/presentation/change_password_page_screen/change_password_page_screen.dart';
 import 'package:fyp2/presentation/change_password_page_screen/binding/change_password_page_binding.dart';
+import 'package:fyp2/presentation/welcomescreen_page_screen/binding/welcomescreen_page_binding.dart';
+import 'package:fyp2/presentation/welcomescreen_page_screen/welcomescreen_page_screen.dart';
+
 import 'package:get/get.dart';
 
 class AppRoutes {
 
-  static String navbar = '/navbar';
+  static String navbarcustomer = '/navbarcustomer_screen';
 
-  static String homeScreen = '/home_screen';
+  static String navbarserviceprovider = '/navbarserviceprovider_screen';
+
+
+  static String customerHomeScreen = '/home_screen';
 
   static String signUpPageCustomerScreen = '/sign_up_page_customer_screen';
 
@@ -66,7 +67,7 @@ class AppRoutes {
 
   static String forgetPasswordPageScreen = '/forget_password_page_screen';
 
-  static String splashscreenPageScreen = '/splashscreen_page_screen';
+  static String welcomePageScreen = '/Welcome_page_screen';
 
   static String loginPageServiceScreen = '/login_page_service_screen';
 
@@ -125,15 +126,22 @@ class AppRoutes {
 
   static List<GetPage> pages = [
     GetPage(
-      name: navbar,
-      page: () => NavbarPage(),
+      name: navbarcustomer,
+      page: () => NavbarCustomerPage(selectedindex: 0,),
       bindings: [
         NavbarBinding(),
       ],
     ),
     GetPage(
-      name: homeScreen,
-      page: () => HomeScreen(),
+      name: navbarserviceprovider,
+      page: () => NavbarServiceProviderPage(),
+      bindings: [
+        NavbarBinding(),
+      ],
+    ),
+    GetPage(
+      name: customerHomeScreen,
+      page: () => CustomerHomeScreen(),
       bindings: [
         HomeBinding(),
       ],
@@ -160,10 +168,10 @@ class AppRoutes {
       ],
     ),
     GetPage(
-      name: splashscreenPageScreen,
-      page: () => SplashscreenPageScreen(),
+      name: welcomePageScreen,
+      page: () => WelcomePageScreen(),
       bindings: [
-        SplashscreenPageBinding(),
+        WelcomePageBinding(),
       ],
     ),
     GetPage(
@@ -238,13 +246,6 @@ class AppRoutes {
       ],
     ),
     GetPage(
-      name: orderPagePendingTabContainerScreen,
-      page: () => OrderPagePendingTabContainerScreen(),
-      bindings: [
-        OrderPagePendingTabContainerBinding(),
-      ],
-    ),
-    GetPage(
       name: serviiceProviderPageAvailableScreen,
       page: () => ServiiceProviderPageAvailableScreen(),
       bindings: [
@@ -307,13 +308,6 @@ class AppRoutes {
       page: () => ChangePasswordPageScreen(),
       bindings: [
         ChangePasswordPageBinding(),
-      ],
-    ),
-    GetPage(
-      name: initialRoute,
-      page: () => SplashscreenPageScreen(),
-      bindings: [
-        SplashscreenPageBinding(),
       ],
     )
   ];

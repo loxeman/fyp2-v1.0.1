@@ -60,290 +60,297 @@ class _MyProfileScreen extends State<MyProfileScreen> {
     return /* Text("Full Name: ${data['full_name']} ${data['last_name']}"); */
         Scaffold(
             backgroundColor: ColorConstant.gray901,
-            body: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 9, top: 9, right: 10),
-                          child: InkWell(
-                              onTap: () {
-                                onTapImgArrowleft();
-                              },
-                              child: CommonImageView(
-                                  svgPath: ImageConstant.imgArrowleft,
-                                  height: getSize(24.00),
-                                  width: getSize(24.00))))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 15, top: 26, right: 15),
-                          child: Text("lbl_my_profile".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoRomanBold34))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 23, top: 22, right: 23),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                CommonImageView(
-                                    imagePath: ImageConstant.imgUser2,
-                                    height: getSize(63.00),
-                                    width: getSize(63.00)),
-                                Padding(
-                                    padding: getPadding(
-                                        left: 13, top: 10, bottom: 10),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                              padding: getPadding(right: 10),
-                                              child: Text(data['name'] == ''
-                                                  ? 'guest'.toUpperCase()
-                                                  : data['name'].toUpperCase(),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: AppStyle
-                                                      .txtRobotoRomanBold18
-                                                      .copyWith(height: 1.22))),
-                                          Align(
-                                              alignment: Alignment.center,
-                                              child: Padding(
-                                                  padding: getPadding(
-                                                      left: 1, top: 3),
-                                                  child: Text(
-                                                      data['email'] == ''
-                                                          ? 'example@email.com'
-                                                          : data['email'],
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: AppStyle
-                                                          .txtRobotoRomanMedium14Bluegray200
-                                                          .copyWith(
-                                                              height: 1.21))))
-                                        ]))
-                              ]))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 15, top: 46, right: 15),
-                          child: Text("lbl_name".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoItalicThin16))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 16, top: 6, right: 16),
-                          child: Text(data['name'] == ''
-                              ? 'guest'.toUpperCase()
-                              : data['name'].toUpperCase(),
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoRomanRegular11))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          height: getVerticalSize(1.00),
-                          width: size.width,
-                          margin: getMargin(top: 14),
-                          decoration: BoxDecoration(
-                              color: ColorConstant.bluegray2005e))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 16, top: 16, right: 16),
-                          child: Text("lbl_mobile_number".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoItalicThin16))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 16, top: 6, right: 16),
-                          child: Text(data['phone'] == ''
-                              ? 'example: +11111'
-                              : data['mobile'],
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoRomanRegular11))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          height: getVerticalSize(1.00),
-                          width: size.width,
-                          margin: getMargin(top: 15),
-                          decoration: BoxDecoration(
-                              color: ColorConstant.bluegray2005e))),
-                  Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                          padding: getPadding(left: 15, top: 16, right: 7),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text("lbl_wallet_balance".tr,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.left,
-                                          style:
-                                              AppStyle.txtRobotoItalicThin16),
-                                      Padding(
-                                          padding:
-                                              getPadding(top: 6, right: 10),
-                                          child: Text(data['balance'] == ''
-                                              ? 'RM 0.00'
-                                              : data['balance'],
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtRobotoRomanRegular11))
-                                    ]),
-                                Padding(
-                                    padding: getPadding(top: 8, bottom: 5),
-                                    child: InkWell(onTap: (){ Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                WalletPageScreen()));},
-                                    child: CommonImageView(
-                                        svgPath: ImageConstant
-                                            .imgArrowrightBluegray200,
-                                        height: getSize(24.00),
-                                        width: getSize(24.00))))
-                              ]))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          height: getVerticalSize(1.00),
-                          width: size.width,
-                          margin: getMargin(top: 15),
-                          decoration: BoxDecoration(
-                              color: ColorConstant.bluegray2005e))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 15, top: 17, right: 15),
-                          child: Text("lbl_address".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoItalicThin16))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 16, top: 6, right: 16),
-                          child: Text(data['address'] == ''
-                              ? 'example: Gombak - USA'
-                              : data['address'],
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoRomanRegular11))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          height: getVerticalSize(1.00),
-                          width: size.width,
-                          margin: getMargin(top: 14),
-                          decoration: BoxDecoration(
-                              color: ColorConstant.bluegray2005e))),
-                  Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                          padding: getPadding(left: 15, top: 20, right: 7),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: getPadding(right: 10),
-                                          child: Text("lbl_settings".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtRobotoItalicThin16)),
-                                      Padding(
-                                          padding: getPadding(top: 4),
-                                          child: Text(
-                                              "msg_edit_profile_password".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtRobotoRomanRegular11))
-                                    ]),
-                                Padding(
-                                    padding: getPadding(top: 3, bottom: 8),
-                                    child: InkWell(onTap: (){ Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditProfilePageScreen())); },
-                                    child: CommonImageView(
-                                        svgPath: ImageConstant
-                                            .imgArrowrightBluegray200,
-                                        height: getSize(24.00),
-                                        width: getSize(24.00))))
-                              ]))),
-                  CustomButton(
+            body: SingleChildScrollView(
+              child:Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: getPadding(left: 9, top: 9, right: 10),
+                            child: InkWell(
+                                onTap: () {
+                                  onTapImgArrowleft();
+                                },
+                                child: CommonImageView(
+                                    svgPath: ImageConstant.imgArrowleft,
+                                    height: getSize(24.00),
+                                    width: getSize(24.00))))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: getPadding(left: 15, top: 26, right: 15),
+                            child: Text("lbl_my_profile".tr,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtRobotoRomanBold34))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: getPadding(left: 23, top: 22, right: 23),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  data['image'] == ''?
+                                  CommonImageView(
+                                      imagePath: ImageConstant.imgUser2,
+                                      height: getSize(63.00),
+                                      width: getSize(63.00))
+                                      :  CircleAvatar(
+                                    radius: 31.5,
+                                    backgroundImage: NetworkImage(
+                                        data['image']),),
+                                  Padding(
+                                      padding: getPadding(
+                                          left: 13, top: 10, bottom: 10),
+                                      child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                                padding: getPadding(right: 10),
+                                                child: Text(data['fname'] == ''
+                                                    ? 'guest'.toUpperCase()
+                                                    : data['fname'].toUpperCase(),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.left,
+                                                    style: AppStyle
+                                                        .txtRobotoRomanBold34
+                                                        .copyWith(height: 1.22))),
+                                            Align(
+                                                alignment: Alignment.center,
+                                                child: Padding(
+                                                    padding: getPadding(
+                                                        left: 1, top: 3),
+                                                    child: Text(
+                                                        data['email'] == ''
+                                                            ? 'example@email.com'
+                                                            : data['email'],
+                                                        overflow:
+                                                        TextOverflow.ellipsis,
+                                                        textAlign: TextAlign.left,
+                                                        style: AppStyle
+                                                            .txtRobotoRomanMedium14Bluegray200
+                                                            .copyWith(
+                                                            height: 1.21))))
+                                          ]))
+                                ]))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: getPadding(left: 15, top: 46, right: 15),
+                            child: Text("lbl_name".tr,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtRobotoItalicThin16))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: getPadding(left: 16, top: 6, right: 16),
+                            child: Text(data['lname'] == ''
+                                ? 'guest'.toUpperCase()
+                                : data['fname']+(' ')+data['lname'],
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtRobotoRomanRegular20))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            height: getVerticalSize(1.00),
+                            width: size.width,
+                            margin: getMargin(top: 14),
+                            decoration: BoxDecoration(
+                                color: ColorConstant.bluegray2005e))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: getPadding(left: 16, top: 16, right: 16),
+                            child: Text("lbl_mobile_number".tr,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtRobotoItalicThin16))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: getPadding(left: 16, top: 6, right: 16),
+                            child: Text(data['mobile'] == ''
+                                ? 'example: +11111'
+                                : data['mobile'],
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtRobotoRomanRegular20))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            height: getVerticalSize(1.00),
+                            width: size.width,
+                            margin: getMargin(top: 15),
+                            decoration: BoxDecoration(
+                                color: ColorConstant.bluegray2005e))),
+                    Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                            padding: getPadding(left: 15, top: 16, right: 7),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text("lbl_wallet_balance".tr,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.left,
+                                            style:
+                                            AppStyle.txtRobotoItalicThin16),
+                                        Padding(
+                                            padding:
+                                            getPadding(top: 6, right: 10),
+                                            child: Text(data['balance'] == ''
+                                                ? 'RM 0.00'
+                                                : ('RM ') + data['balance'],
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.left,
+                                                style: AppStyle
+                                                    .txtRobotoRomanRegular20))
+                                      ]),
+                                  Padding(
+                                      padding: getPadding(top: 8, bottom: 5, right: 15),
+                                      child: InkWell(onTap: (){ Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WalletPageScreen()));},
+                                          child: CommonImageView(
+                                              svgPath: ImageConstant
+                                                  .imgArrowrightBluegray200,
+                                              height: getSize(24.00),
+                                              width: getSize(24.00))))
+                                ]))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            height: getVerticalSize(1.00),
+                            width: size.width,
+                            margin: getMargin(top: 15),
+                            decoration: BoxDecoration(
+                                color: ColorConstant.bluegray2005e))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: getPadding(left: 15, top: 17, right: 15),
+                            child: Text("lbl_address".tr,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtRobotoItalicThin16))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: getPadding(left: 16, top: 6, right: 16),
+                            child: Text(data['address'] == ''
+                                ? 'example: Gombak - USA'
+                                : data['address'],
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtRobotoRomanRegular20))),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            height: getVerticalSize(1.00),
+                            width: size.width,
+                            margin: getMargin(top: 14),
+                            decoration: BoxDecoration(
+                                color: ColorConstant.bluegray2005e))),
+                    Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                            padding: getPadding(left: 15, top: 20, right: 7),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: getPadding(right: 10),
+                                            child: Text("lbl_settings".tr,
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.left,
+                                                style: AppStyle
+                                                    .txtRobotoItalicThin16)),
+                                        Padding(
+                                            padding: getPadding(top: 4),
+                                            child: Text(
+                                                "msg_edit_profile_password".tr,
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.left,
+                                                style: AppStyle
+                                                    .txtRobotoRomanRegular20))
+                                      ]),
+                                  Padding(
+                                      padding: getPadding(top: 3, bottom: 8, right: 15),
+                                      child: InkWell(onTap: (){ Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditProfilePageScreen())); },
+                                          child: CommonImageView(
+                                              svgPath: ImageConstant
+                                                  .imgArrowrightBluegray200,
+                                              height: getSize(24.00),
+                                              width: getSize(24.00))))
+                                ]))),
+                    CustomButton(
                       width: 200,
                       text: "lbl_log_out".tr,
                       margin:
-                          getMargin(left: 15, top: 91, right: 15, bottom: 5),
+                      getMargin(left: 15, top: 91, right: 15, bottom: 5),
                       variant: ButtonVariant.FillRed900,
                       alignment: Alignment.center,
-                    onTap: () async {
-                      MyAlertDilaog.showMyDialog(
-                          context: context,
-                          title: 'Log Out',
-                          content:
-                          'Are you sure to log out ?',
-                          tabNo: () {
-                            Navigator.pop(context);
-                          },
-                          tabYes: () async {
-                            await AuthRepo.logOut();
-
-                            await Future.delayed(
-                                const Duration(
-                                    microseconds:
-                                    100))
-                                .whenComplete(() {
+                      onTap: () async {
+                        MyAlertDilaog.showMyDialog(
+                            context: context,
+                            title: 'Log Out',
+                            content:
+                            'Are you sure to log out ?',
+                            tabNo: () {
                               Navigator.pop(context);
-                              Navigator
-                                  .pushReplacementNamed(
-                                  context,
-                                  '/initialRoute');
+                            },
+                            tabYes: () async {
+                              await AuthRepo.logOut();
+
+                              await Future.delayed(
+                                  const Duration(
+                                      microseconds:
+                                      100))
+                                  .whenComplete(() {
+                                Navigator.pop(context);
+                                Navigator
+                                    .pushReplacementNamed(
+                                    context,
+                                    '/Welcome_page_screen');
+                              });
                             });
-                          });
-                    },
-                  )
-                ])
+                      },
+                    )
+                  ]) ,
+            ),
     );}
     return const Center(
       child: CircularProgressIndicator(

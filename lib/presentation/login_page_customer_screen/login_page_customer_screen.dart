@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/Tool/auth_handler.dart';
 import 'package:fyp2/presentation/forget_password_page_screen/forget_password_page_screen.dart';
+import 'package:fyp2/presentation/sign_up_page_customer_screen/sign_up_page_customer_screen.dart';
 import 'package:fyp2/widgets/auth_widgets.dart';
 import 'package:fyp2/widgets/snackbar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -82,7 +83,7 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
   bool passwordVisible = true;
 
   void navigate() {
-    Navigator.pushReplacementNamed(context, '/home_screen');
+    Navigator.pushReplacementNamed(context, '/navbarcustomer_screen');
   }
 
   void logIn() async {
@@ -202,7 +203,7 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
                       Align(
                           alignment: Alignment.centerRight,
                           child: Padding(
-                              padding: getPadding(left: 27, top: 14, right: 27),
+                              padding: getPadding(left: 39, top: 14, right: 39),
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,25 +211,13 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
                                   children: [
                                     Padding(
                                         padding: getPadding(top: 4, bottom: 2),
-                                        child: TextButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  context, MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ForgetPasswordPageScreen()));
-                                            },
-                                            child: Text(
-                                                "msg_forget_your_password".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: AppStyle
-                                                    .txtRobotoRomanMedium14
-                                                    .copyWith(height: 1.21)))),
+                                                child: Text("msg_forget_your_password".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.
+                                                    txtRobotoRomanMedium14
+                                                    .copyWith(height: 1.21))),
                                     Padding(
                                         padding: getPadding(left: 3),
                                         child: CommonImageView(
-                                            svgPath: ImageConstant
-                                                .imgArrowright24x24,
+                                            svgPath: ImageConstant.imgArrowright,
                                             height: getSize(24.00),
                                             width: getSize(24.00)))
                                   ]))),
@@ -262,8 +251,11 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
                                         padding: getPadding(left: 2, top: 1),
                                         child: TextButton(
                                             onPressed: () {
-                                              Navigator.pushReplacementNamed(
-                                                  context, '/sign_up_page_customer_screen');
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SignUpPageCustomerScreen()));
                                             },
                                             child: Text("lbl_sign_up3".tr,
                                                 overflow: TextOverflow.ellipsis,

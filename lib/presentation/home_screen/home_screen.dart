@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/presentation/category_page_screen/category_page_screen.dart';
 import 'package:fyp2/presentation/my_profile_screen/my_profile_screen.dart';
-import 'package:fyp2/presentation/order_page_pending_tab_container_screen/order_page_pending_tab_container_screen.dart';
+import 'package:fyp2/presentation/navbar/navbar.dart';
+import 'package:fyp2/presentation/order_page_pending_page/Order_page.dart';
 import '../home_screen/widgets/home_screen_item_widget.dart';
 import 'controller/home_controller.dart';
 import 'models/home_screen_item_model.dart';
@@ -13,18 +14,19 @@ import 'package:fyp2/widgets/app_bar/custom_app_bar.dart';
 import 'package:fyp2/widgets/custom_button.dart';
 import 'package:fyp2/widgets/custom_text_form_field.dart';
 
-class HomeScreen extends StatefulWidget {
+class CustomerHomeScreen extends StatefulWidget {
   /* final String documentId; */
-  const HomeScreen({Key? key /* , required this.documentId */})
+  const CustomerHomeScreen({Key? key /* , required this.documentId */})
       : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreen();
+  State<CustomerHomeScreen> createState() => _CustomerHomeScreen();
 }
 
-class _HomeScreen extends State<HomeScreen> {
+class _CustomerHomeScreen extends State<CustomerHomeScreen> {
 
-  final controller=Get.put(HomeController());
+  final controller=Get.put(CustomerHomeScreenController());
+  TextEditingController languageOneController = TextEditingController();
   String? documentId;
   CollectionReference customers =
   FirebaseFirestore.instance.collection('customers');
@@ -90,9 +92,9 @@ class _HomeScreen extends State<HomeScreen> {
                               alignment: Alignment.centerLeft,
                               child: Padding(
                                   padding: getPadding(),
-                                  child: Text(data['name'] == ''
+                                  child: Text(data['fname'] == ''
                                       ? 'guest'.toUpperCase()
-                                      : data['name'].toUpperCase(),
+                                      : data['fname'].toUpperCase(),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtRubikBold32
@@ -104,7 +106,7 @@ class _HomeScreen extends State<HomeScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  MyProfileScreen()));},
+                                  NavbarCustomerPage(selectedindex: 3,)));},
                       height: getVerticalSize(63.00),
                       width: getHorizontalSize(65.00),
                       imagePath: ImageConstant.imgUser2,
@@ -118,7 +120,7 @@ class _HomeScreen extends State<HomeScreen> {
                   CustomTextFormField(
                       width: 320,
                       focusNode: FocusNode(),
-                      controller: controller.languageOneController,
+                      controller: languageOneController,
                       hintText: "lbl_search_service".tr,
                       margin: getMargin(left: 28, top: 16, right: 27),
                       variant: TextFormFieldVariant.OutlineGray400,
@@ -152,11 +154,11 @@ class _HomeScreen extends State<HomeScreen> {
                             CustomButton(
                                 width: 173,
                                 text: "msg_fast_appointment".tr.toUpperCase(),
-                                //onTap: () {Navigator.push(
-                                  //  context,
-                                   // MaterialPageRoute(
-                                   //     builder: (context) =>
-                                    //        SearchSelectCategoryPageOneScreen()));},
+                                onTap: () {Navigator.push(
+                                   context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NavbarCustomerPage(selectedindex: 1,)));},
                             ),
                             CustomButton(
                                 width: 139,
@@ -167,7 +169,7 @@ class _HomeScreen extends State<HomeScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          OrderPagePendingTabContainerScreen()));},)
+                                          NavbarCustomerPage(selectedindex: 2,)));},)
                           ])),
                   Align(
                       alignment: Alignment.centerLeft,
@@ -190,11 +192,11 @@ class _HomeScreen extends State<HomeScreen> {
                                   crossAxisSpacing: getHorizontalSize(12.13)),
                           physics: BouncingScrollPhysics(),
                           itemCount: controller
-                              .homeModelObj.value.homeScreenItemList.length,
+                              .CustomerHomeScreenModelObj.value.CustomerHomeScreenItemList.length,
                           itemBuilder: (context, index) {
-                            HomeScreenItemModel model = controller
-                                .homeModelObj.value.homeScreenItemList[index];
-                            return HomeScreenItemWidget(model);
+                            CustomerHomeScreenItemModel model = controller
+                                .CustomerHomeScreenModelObj.value.CustomerHomeScreenItemList[index];
+                            return CustomerHomeScreenItemWidget(model);
                           }))),
                   Align(
                       alignment: Alignment.centerRight,

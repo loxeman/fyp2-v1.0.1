@@ -1,11 +1,9 @@
 import 'package:fyp2/core/app_export.dart';
 import 'package:fyp2/presentation/home_screen/models/home_model.dart';
-import 'package:flutter/material.dart';
 
-class HomeController extends GetxController {
-  TextEditingController languageOneController = TextEditingController();
+class CustomerHomeScreenController extends GetxController {
 
-  Rx<HomeModel> homeModelObj = HomeModel().obs;
+  Rx<CustomerHomeScreenModel> CustomerHomeScreenModelObj = CustomerHomeScreenModel().obs;
 
   @override
   void onReady() {
@@ -15,6 +13,5 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    languageOneController.dispose();
   }
 }

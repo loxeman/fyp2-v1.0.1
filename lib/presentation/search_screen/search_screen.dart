@@ -34,18 +34,6 @@ class _SearchScreen extends State<SearchScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 8, top: 9, right: 10),
-                          child: InkWell(
-                              onTap: () {
-                                onTapImgArrowleft();
-                              },
-                              child: CommonImageView(
-                                  svgPath: ImageConstant.imgArrowleft,
-                                  height: getSize(24.00),
-                                  width: getSize(24.00))))),
                   CustomTextFormField(
                       width: 320,
                       focusNode: FocusNode(),
