@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/presentation/login_page_customer_screen/login_page_customer_screen.dart';
 import 'package:fyp2/presentation/login_page_service_screen/login_page_service_screen.dart';
 import 'controller/welcomescreen_page_controller.dart';
@@ -6,6 +8,7 @@ import 'package:fyp2/core/app_export.dart';
 import 'package:fyp2/widgets/custom_button.dart';
 
 class WelcomePageScreen extends GetWidget<WelcomePageController> {
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,6 +73,5 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
           ],
         ),
       ),
-    );
-  }
+    ); }
 }

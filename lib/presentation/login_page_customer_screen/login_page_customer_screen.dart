@@ -83,6 +83,7 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
   bool passwordVisible = true;
 
   void navigate() {
+    Navigator.pop(context);
     Navigator.pushReplacementNamed(context, '/navbarcustomer_screen');
   }
 
@@ -127,7 +128,6 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
             backgroundColor: ColorConstant.gray901,
             body: Form(
                 key: _formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,

@@ -55,7 +55,7 @@ class WalletPageScreen extends GetWidget<WalletPageController> {
                                     width: 150,
                                     text: "lbl_top_up".tr,
                                     variant: ButtonVariant.FillLightgreen800,
-                                    shape: ButtonShape.RoundedBorder1),
+                                ),
                                 CustomButton(
                                     width: 150,
                                     text: "lbl_withdraw".tr,

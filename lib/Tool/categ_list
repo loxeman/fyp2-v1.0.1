@@ -3,7 +3,7 @@ List<String> maincateg = [
   'Plumber',
   'Technician',
   'Electrician',
-  'Home Cleaning',
+  'Cleaning',
   'Gardener',
 ];
 
@@ -24,7 +24,7 @@ List<String> Electrician = [
   'other'
 ];
 
-List<String> HomeCleaning = [
+List<String> Cleaning = [
   'subcategory',
   'Indoor',
   'Outdoor',

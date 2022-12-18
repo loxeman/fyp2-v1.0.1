@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fyp2/Tool/appbar_widgets.dart';
+import 'package:fyp2/presentation/search_screen/models/search_screen_model.dart';
+
 import '../search_screen/widgets/search_screen_item_widget.dart';
 import 'controller/search_controller.dart';
 import 'models/search_screen_item_model.dart';
@@ -25,8 +30,164 @@ class _SearchScreen extends State<SearchScreen> {
 
   final controller=Get.put(SearchController());
 
+  CollectionReference services =
+  FirebaseFirestore.instance.collection('services');
+  CollectionReference service_provider =
+  FirebaseFirestore.instance.collection('service-provider');
+
   @override
   Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+          backgroundColor: ColorConstant.gray900,
+          appBar: AppBar(
+            elevation: 0,
+            toolbarHeight: 150,
+            automaticallyImplyLeading: false,
+            backgroundColor: ColorConstant.gray900,
+            title: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                CustomTextFormField(
+                width: 320,
+                focusNode: FocusNode(),
+                controller: controller.group2341Controller,
+                hintText: "lbl_search".tr,
+                margin: getMargin(),
+                shape: TextFormFieldShape.RoundedBorder12,
+                fontStyle: TextFormFieldFontStyle.RobotoItalicThin15,
+                textInputAction: TextInputAction.done,
+                alignment: Alignment.center,
+                suffix: Container(
+                    margin:
+                    getMargin(left: 30, top: 7, right: 14, bottom: 6),
+                    child: CommonImageView(
+                        svgPath: ImageConstant.imgRefresh)),
+                suffixConstraints: BoxConstraints(
+                    minWidth: getHorizontalSize(22.00),
+                    minHeight: getVerticalSize(24.00))),
+              Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                      padding: getPadding( top: 7),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            CustomDropDown(
+                                width: 157,
+                                focusNode: FocusNode(),
+                                icon: Container(
+                                    margin: getMargin(left: 23, right: 11),
+                                    child: CommonImageView(
+                                        svgPath:
+                                        ImageConstant.imgArrowdown)),
+                                hintText: "lbl_availabilty".tr,
+                                margin: getMargin(top: 2),
+                                padding: DropDownPadding.PaddingAll9,
+                                items: controller
+                                    .searchModelObj.value.dropdownItemList,
+                                onChanged: (value) {
+                                  controller.onSelected(value);
+                                }),
+                            CustomDropDown(
+                                width: 157,
+                                focusNode: FocusNode(),
+                                icon: Container(
+                                    margin: getMargin(left: 30, right: 8),
+                                    child: CommonImageView(
+                                        svgPath:
+                                        ImageConstant.imgArrowdown)),
+                                hintText: "lbl_category2".tr,
+                                margin: getMargin(left: 5, bottom: 2),
+                                items: controller
+                                    .searchModelObj.value.dropdownItemList1,
+                                onChanged: (value) {
+                                  controller.onSelected1(value);
+                                })
+                          ]))),
+              Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                      padding: getPadding(top: 6),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            CustomDropDown(
+                                width: 157,
+                                focusNode: FocusNode(),
+                                icon: Container(
+                                    margin: getMargin(left: 28, right: 11),
+                                    child: CommonImageView(
+                                        svgPath:
+                                        ImageConstant.imgArrowdown)),
+                                hintText: "lbl_location".tr,
+                                margin: getMargin(top: 1),
+                                padding: DropDownPadding.PaddingAll9,
+                                items: controller
+                                    .searchModelObj.value.dropdownItemList2,
+                                onChanged: (value) {
+                                  controller.onSelected2(value);
+                                }),
+                            CustomDropDown(
+                                width: 157,
+                                focusNode: FocusNode(),
+                                icon: Container(
+                                    margin: getMargin(left: 16, right: 8),
+                                    child: CommonImageView(
+                                        svgPath:
+                                        ImageConstant.imgArrowdown)),
+                                hintText: "lbl_sub_category".tr,
+                                margin: getMargin(left: 5, bottom: 1),
+                                items: controller
+                                    .searchModelObj.value.dropdownItemList3,
+                                onChanged: (value) {
+                                  controller.onSelected3(value);
+                                })
+                          ]))),
+          ]),),
+          body:StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('services').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return const Text('Something went wrong');
+    }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+              child: CircularProgressIndicator(),
+    );
+    }
+            if (snapshot.data!.docs.isEmpty) {
+              return const Center(
+              child: Text('No Services Available !',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                      fontFamily: 'RobotoRoman',
+                      fontSize: 26,
+                      letterSpacing: 1.5,
+                      color: Colors.white,
+    ),));
+    }
+              else return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return SearchPageModel(
+                  services: snapshot.data!.docs[index],
+    );
+    });
+    },),
+
+  ),
+    );
+  }
+
+
+  @override
+  /*Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
             backgroundColor: ColorConstant.gray900,
@@ -168,7 +329,7 @@ class _SearchScreen extends State<SearchScreen> {
                       fontStyle: ButtonFontStyle.RobotoRomanMedium12,
                       alignment: Alignment.center)
                 ])));
-  }
+  }*/
 
   onTapImgArrowleft() {
     Get.back();

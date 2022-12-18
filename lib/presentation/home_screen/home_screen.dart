@@ -49,8 +49,6 @@ class _CustomerHomeScreen extends State<CustomerHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return FutureBuilder<DocumentSnapshot>(
     future: FirebaseAuth.instance.currentUser!.isAnonymous
     ? anonymous.doc(documentId).get()

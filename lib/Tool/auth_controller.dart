@@ -1,5 +1,9 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fyp2/presentation/home_screen/home_screen.dart';
+import 'package:fyp2/presentation/navbar/navbar.dart';
+import 'package:fyp2/presentation/navbar_serviceprovider/navbar_serviceprovider.dart';
+import 'package:fyp2/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,7 +25,22 @@ class AuthController extends GetxController{
     _user = Rx<User?>(auth.currentUser);
     //our user would be notified
     _user.bindStream(auth.userChanges());
+    ever(_user, _initialScreen);
   }
+
+  _initialScreen(User? user){
+    firestore.collection('customers').doc(user!.uid).get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists){
+        Get.offAndToNamed(AppRoutes.navbarcustomer);
+      }
+      else{
+        Get.offAndToNamed(AppRoutes.navbarserviceprovider);
+    }});
+
+  }
+
+
 
 
   void register(String email, password)async{

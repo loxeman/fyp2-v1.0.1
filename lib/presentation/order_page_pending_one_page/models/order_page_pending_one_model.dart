@@ -15,7 +15,7 @@ const OrderPageOngoingModel({Key? key, required this.order}) : super(key: key);
 @override
 Widget build(BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: getPadding(top:10,right: 25,left: 25),
     child: Container(
       decoration: AppDecoration.fillWhiteA700.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -51,7 +51,7 @@ Widget build(BuildContext context) {
                   alignment: Alignment.center,
                   child: Container(
                     width: getHorizontalSize(
-                      233.00,
+                      180.00,
                     ),
                     margin: getMargin(
                       left: 1,
@@ -151,7 +151,7 @@ Widget build(BuildContext context) {
                 ),
                 Container(
                   width: getHorizontalSize(
-                    237.00,
+                    180.00,
                   ),
                   margin: getMargin(
                     top: 1,

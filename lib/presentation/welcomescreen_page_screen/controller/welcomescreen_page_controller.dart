@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/core/app_export.dart';
 import 'package:fyp2/presentation/welcomescreen_page_screen/models/splashscreen_page_model.dart';
 

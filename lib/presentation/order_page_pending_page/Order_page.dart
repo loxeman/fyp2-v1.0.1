@@ -16,14 +16,15 @@ Widget build(BuildContext context) {
       backgroundColor: ColorConstant.gray900,
       appBar: AppBar(
         elevation: 0,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         backgroundColor: ColorConstant.gray900,
-        leading: const AppBarBackButton(),
         title: const AppBarTitle(
           title: 'Orders',
         ),
         bottom: const TabBar(
             indicatorColor: Colors.indigo,
-            indicatorWeight: 8,
+            indicatorWeight: 5,
             tabs: [
               RepeatedTab(label: 'Pending'),
               RepeatedTab(label: 'Ongoing'),

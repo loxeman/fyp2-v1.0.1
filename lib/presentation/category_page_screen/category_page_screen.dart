@@ -1,6 +1,6 @@
-import '../category_page_screen/widgets/category_page_item_widget.dart';
+import 'package:fyp2/Tool/appbar_widgets.dart';
+import 'package:fyp2/presentation/search_screen/search_screen.dart';
 import 'controller/category_page_controller.dart';
-import 'models/category_page_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/app_export.dart';
 
@@ -9,300 +9,88 @@ class CategoryPageScreen extends GetWidget<CategoryPageController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+            appBar: AppBar(
+              leading: const AppBarBackButton(),
+              centerTitle: true, backgroundColor: ColorConstant.gray900,
+                title: const  AppBarTitle(title: 'Category'),
+                actions: [const AppBarHome()],
+            ),
             backgroundColor: ColorConstant.gray900,
-            body: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 8, top: 9, right: 10),
-                          child: InkWell(
-                              onTap: () {
-                                onTapImgArrowleft();
-                              },
-                              child: CommonImageView(
-                                  svgPath: ImageConstant.imgArrowleft,
-                                  height: getSize(24.00),
-                                  width: getSize(24.00))))),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: getPadding(left: 14, top: 27, right: 14),
-                          child: Text("lbl_category2".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoRomanBold34))),
-                  Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                          padding: getPadding(left: 14, top: 39, right: 14),
-                          child: Obx(() => GridView.builder(
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      mainAxisExtent: getVerticalSize(105.00),
-                                      crossAxisCount: 3,
-                                      mainAxisSpacing: getHorizontalSize(12.13),
-                                      crossAxisSpacing:
-                                          getHorizontalSize(12.13)),
-                              physics: BouncingScrollPhysics(),
-                              itemCount: controller.categoryPageModelObj.value
-                                  .categoryPageItemList.length,
-                              itemBuilder: (context, index) {
-                                CategoryPageItemModel model = controller
-                                    .categoryPageModelObj
-                                    .value
-                                    .categoryPageItemList[index];
-                                return CategoryPageItemWidget(model);
-                              })))),
-                  Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                          padding: getPadding(left: 14, top: 19, right: 14),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Container(
-                                    decoration: AppDecoration.fillWhiteA700
-                                        .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder25),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                              padding: getPadding(
-                                                  left: 11, top: 7, right: 11),
-                                              child: CommonImageView(
-                                                  imagePath: ImageConstant
-                                                      .img29298converted,
-                                                  height:
-                                                      getVerticalSize(71.00),
-                                                  width: getHorizontalSize(
-                                                      75.00))),
-                                          Padding(
-                                              padding: getPadding(
-                                                  left: 11,
-                                                  top: 5,
-                                                  right: 11,
-                                                  bottom: 3),
-                                              child: Text("lbl_cleaning".tr,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: AppStyle
-                                                      .txtRobotoRomanBold14))
-                                        ])),
-                                Container(
-                                    margin: getMargin(left: 12),
-                                    decoration: AppDecoration.fillWhiteA700
-                                        .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder25),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                              padding: getPadding(
-                                                  left: 18, top: 3, right: 18),
-                                              child: CommonImageView(
-                                                  imagePath: ImageConstant
-                                                      .img40999converted,
-                                                  height:
-                                                      getVerticalSize(75.00),
-                                                  width: getHorizontalSize(
-                                                      47.00))),
-                                          Padding(
-                                              padding: getPadding(
-                                                  left: 18,
-                                                  top: 4,
-                                                  right: 18,
-                                                  bottom: 4),
-                                              child: Text("lbl_electrical".tr,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: AppStyle
-                                                      .txtRobotoRomanBold14))
-                                        ])),
-                                Container(
-                                    margin: getMargin(left: 11),
-                                    decoration: AppDecoration.fillWhiteA700
-                                        .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder25),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Padding(
-                                                  padding: getPadding(
-                                                      left: 21, right: 21),
-                                                  child: CommonImageView(
-                                                      imagePath: ImageConstant
-                                                          .img19191converted,
-                                                      height: getVerticalSize(
-                                                          78.00),
-                                                      width: getHorizontalSize(
-                                                          51.00)))),
-                                          Padding(
-                                              padding: getPadding(
-                                                  left: 24,
-                                                  top: 6,
-                                                  right: 20,
-                                                  bottom: 2),
-                                              child: Text("lbl_plumber".tr,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: AppStyle
-                                                      .txtRobotoRomanBold14))
-                                        ]))
-                              ]))),
-                  Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                          padding: getPadding(
-                              left: 14, top: 19, right: 14, bottom: 160),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Container(
-                                    decoration: AppDecoration.fillWhiteA700
-                                        .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder25),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Padding(
-                                                  padding: getPadding(top: 25),
-                                                  child: CommonImageView(
-                                                      imagePath: ImageConstant
-                                                          .img17205converted,
-                                                      height: getVerticalSize(
-                                                          54.00),
-                                                      width: getHorizontalSize(
-                                                          98.00)))),
-                                          Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Padding(
-                                                  padding: getPadding(
-                                                      left: 16,
-                                                      top: 2,
-                                                      right: 16,
-                                                      bottom: 5),
-                                                  child: Text("lbl_mechanic".tr,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: AppStyle
-                                                          .txtRobotoRomanBold14)))
-                                        ])),
-                                Container(
-                                    margin: getMargin(left: 12),
-                                    decoration: AppDecoration.fillWhiteA700
-                                        .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder25),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Padding(
-                                                  padding: getPadding(top: 14),
-                                                  child: CommonImageView(
-                                                      imagePath: ImageConstant
-                                                          .img51384361,
-                                                      height: getVerticalSize(
-                                                          59.00),
-                                                      width: getHorizontalSize(
-                                                          98.00)))),
-                                          Padding(
-                                              padding: getPadding(
-                                                  left: 6,
-                                                  top: 8,
-                                                  right: 10,
-                                                  bottom: 5),
-                                              child: Text("lbl_construction".tr,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: AppStyle
-                                                      .txtRobotoRomanBold14))
-                                        ])),
-                                Container(
-                                    margin: getMargin(left: 11),
-                                    decoration: AppDecoration.fillWhiteA700
-                                        .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder25),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Padding(
-                                                  padding: getPadding(top: 24),
-                                                  child: CommonImageView(
-                                                      imagePath: ImageConstant
-                                                          .imgLogisticworkers,
-                                                      height: getVerticalSize(
-                                                          49.00),
-                                                      width: getHorizontalSize(
-                                                          98.00)))),
-                                          Padding(
-                                              padding: getPadding(
-                                                  left: 23,
-                                                  top: 9,
-                                                  right: 23,
-                                                  bottom: 4),
-                                              child: Text("lbl_logistic".tr,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: AppStyle
-                                                      .txtRobotoRomanBold14))
-                                        ]))
-                              ])))
-                ])));
+            body: GridView.count(
+              crossAxisCount: 3,
+              crossAxisSpacing: 6,
+              padding: getPadding(left: 10,right: 10),
+              children: <Widget>[
+                RepeatedTile(label: 'Cleaning'.toUpperCase(), image: ImageConstant.img29298converted, iheight: 98, iwidth: 98),
+                RepeatedTile(label: 'Electrician'.toUpperCase(), image: ImageConstant.img40999converted, iheight: 98, iwidth: 70),
+                RepeatedTile(label: 'Plumber'.toUpperCase(), image: ImageConstant.img19191converted, iheight: 108, iwidth: 90),
+                RepeatedTile(label: 'Mechanic'.toUpperCase(), image: ImageConstant.img17205converted, iheight: 80, iwidth: 114),
+                RepeatedTile(label: 'Construction'.toUpperCase(), image: ImageConstant.img51384361, iheight: 98, iwidth: 114),
+                RepeatedTile(label: 'Logistic'.toUpperCase(), image: ImageConstant.imgLogisticworkers, iheight: 75, iwidth: 114),
+                RepeatedTile(label: 'Cleaning'.toUpperCase(), image: ImageConstant.img29298converted, iheight: 98, iwidth: 98),
+                RepeatedTile(label: 'Electrician'.toUpperCase(), image: ImageConstant.img40999converted, iheight: 98, iwidth: 70),
+                RepeatedTile(label: 'Plumber'.toUpperCase(), image: ImageConstant.img19191converted, iheight: 108, iwidth: 90),
+                RepeatedTile(label: 'Mechanic'.toUpperCase(), image: ImageConstant.img17205converted, iheight: 80, iwidth: 114),
+                RepeatedTile(label: 'Construction'.toUpperCase(), image: ImageConstant.img51384361, iheight: 98, iwidth: 114),
+                RepeatedTile(label: 'Logistic'.toUpperCase(), image: ImageConstant.imgLogisticworkers, iheight: 75, iwidth: 114)
+              ]
+              ),
+            ),
+            );
   }
+}
 
-  onTapImgArrowleft() {
-    Get.back();
+class RepeatedTile extends StatelessWidget {
+  final String label;
+  final String image;
+  final double iheight;
+  final double iwidth;
+  const RepeatedTile({Key? key, required this.label, required this.image, required this.iheight, required this.iwidth}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: getMargin(top: 10),
+        decoration: AppDecoration.fillWhiteA700
+            .copyWith(
+            borderRadius: BorderRadiusStyle
+                .roundedBorder25),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment:
+            CrossAxisAlignment.center,
+            mainAxisAlignment:
+            MainAxisAlignment.end,
+            children: [
+              Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                      padding: getPadding(),
+                      child:InkWell(
+                          onTap: (){Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SearchScreen(availability: '', category: label, location: '',)));},
+                          child: CommonImageView(
+                          imagePath: image,
+                          height: getVerticalSize(
+                              iheight),
+                          width: getHorizontalSize(
+                              iwidth))),
+                      )),
+              Padding(
+                  padding: getPadding(
+                      left: 6,
+                      top: 6,
+                      right: 6,
+                      bottom: 6),
+                  child: Text(label,
+                      overflow:
+                      TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: AppStyle
+                          .txtRobotoRomanBold14))
+            ]));
   }
 }

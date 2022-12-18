@@ -5,10 +5,10 @@ import 'package:fyp2/theme/app_decoration.dart';
 import 'package:fyp2/theme/app_style.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
-class OrderPagePendingModel extends StatelessWidget {
+class SearchPageModel extends StatelessWidget {
 
-  final dynamic order;
-  const OrderPagePendingModel({Key? key, required this.order}) : super(key: key);
+  final dynamic services;
+  const SearchPageModel({Key? key, required this.services}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,8 @@ class OrderPagePendingModel extends StatelessWidget {
         decoration: AppDecoration.fillWhiteA700.copyWith(
           borderRadius: BorderRadiusStyle.roundedBorder12,
         ),
+        width: getHorizontalSize(320),
+        alignment: Alignment.center,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
@@ -28,7 +30,7 @@ class OrderPagePendingModel extends StatelessWidget {
                 top: 5,
                 bottom: 6,
               ),
-              child: Image.network(order['serimage'],
+              child: Image.network(services['serimages'][0],
                 height: getVerticalSize(67.00,),
                 width: getHorizontalSize(62.00,),
               ),
@@ -60,18 +62,12 @@ class OrderPagePendingModel extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            order['sername'],
+                            services['sername'],
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: AppStyle.txtRobotoRomanBold16,
                           ),
                           Container(
-                            height: getVerticalSize(
-                              12.00,
-                            ),
-                            width: getHorizontalSize(
-                              82.00,
-                            ),
                             margin: getMargin(
                               top: 3,
                               bottom: 3,
@@ -117,7 +113,7 @@ class OrderPagePendingModel extends StatelessWidget {
                       right: 10,
                     ),
                     child: Text(
-                      order['storename'],
+                      services['storename'],
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtRobotoRomanLight11,
@@ -129,7 +125,7 @@ class OrderPagePendingModel extends StatelessWidget {
                       right: 10,
                     ),
                     child: Text(
-                      order['appointment'],
+                      ('Operation time: ') + services['open']+(' - ') + services['close'],
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtRobotoRomanLight11,
@@ -141,53 +137,48 @@ class OrderPagePendingModel extends StatelessWidget {
                       right: 10,
                     ),
                     child: Text(
-                      ('Location:') + (order['location']),
+                      ('Location:') + (services['location']),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtRobotoRomanLight11,
                     ),
                   ),
-                  Container(
-                    width: getHorizontalSize(
-                      65.00,
-                    ),
-                    margin: getMargin(
-                      top: 4,
-                      bottom: 1,
-                    ),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "lbl_booking_price".tr,
-                            style: TextStyle(
-                              color: ColorConstant.black900,
-                              fontSize: getFontSize(
-                                11,
-                              ),
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'RM '+order['price'],
-                            style: TextStyle(
-                              color: ColorConstant.black900,
-                              fontSize: getFontSize(
-                                11,
-                              ),
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
                 ],
               ),
             ),
+            Padding(padding: getPadding(top: 30),
+            child: Container(
+              alignment: Alignment.bottomRight,
+            child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: "lbl_booking_price".tr,
+              style: TextStyle(
+                color: ColorConstant.black900,
+                fontSize: getFontSize(
+                  11,
+                ),
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            TextSpan(
+              text: 'RM '+services['price'],
+              style: TextStyle(
+                color: ColorConstant.black900,
+                fontSize: getFontSize(
+                  11,
+                ),
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
+      ),
+    ),)
           ],
         ),
       ),);}}

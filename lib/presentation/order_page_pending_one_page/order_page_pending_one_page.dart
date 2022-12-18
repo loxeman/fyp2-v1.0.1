@@ -33,7 +33,8 @@ class OrderPageOngoingPage extends StatelessWidget {
               style: TextStyle(
                   fontFamily: 'RobotoRoman',
                   fontSize: 26,
-                  letterSpacing: 1.5
+                  letterSpacing: 1.5,
+                color: Colors.white,
               ),
             ));
       }

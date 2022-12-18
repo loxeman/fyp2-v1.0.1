@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp2/presentation/navbar/navbar.dart';
 import 'package:get/get.dart';
 
 class AppBarBackButton extends StatelessWidget {
@@ -38,6 +39,28 @@ class AppBarTitle extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 18,
           letterSpacing: 1.5),
+    );
+  }
+}
+
+class AppBarHome extends StatelessWidget {
+  const AppBarHome({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const Icon(
+        Icons.home,
+        color: Colors.white,
+      ),
+      onPressed: () {Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  NavbarCustomerPage(selectedindex: 0)));
+      },
     );
   }
 }

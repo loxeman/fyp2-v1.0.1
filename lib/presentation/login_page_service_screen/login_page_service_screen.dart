@@ -81,6 +81,7 @@ class _LoginPageServiceScreen extends State<LoginPageServiceScreen> {
 
           await Future.delayed(const Duration(milliseconds: 100))
               .whenComplete(() {
+                Navigator.pop(context);
             Navigator.of(context).pushReplacementNamed('/navbarserviceprovider_screen');
           });
         } else {
@@ -113,7 +114,6 @@ class _LoginPageServiceScreen extends State<LoginPageServiceScreen> {
             backgroundColor: ColorConstant.gray901,
             body: Form(
                 key: _formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,

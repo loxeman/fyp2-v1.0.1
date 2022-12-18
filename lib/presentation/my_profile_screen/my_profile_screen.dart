@@ -340,7 +340,7 @@ class _MyProfileScreen extends State<MyProfileScreen> {
                                       microseconds:
                                       100))
                                   .whenComplete(() {
-                                Navigator.pop(context);
+                                    Navigator.pop(context);
                                 Navigator
                                     .pushReplacementNamed(
                                     context,
