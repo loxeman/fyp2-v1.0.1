@@ -99,18 +99,26 @@ class _CustomerHomeScreen extends State<CustomerHomeScreen> {
                                           .copyWith(height: 1.19))))
                         ])),
                 actions: [
-                  AppbarImage(
-                      onTap: (){ Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  NavbarCustomerPage(selectedindex: 3,)));},
-                      height: getVerticalSize(63.00),
-                      width: getHorizontalSize(65.00),
-                      imagePath: ImageConstant.imgUser2,
-                      margin: getMargin(left: 27, right: 27, bottom: 2))
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: getPadding(left: 23, top: 22, right: 23),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                      data['image'] == ''?
+                          CommonImageView(
+                          imagePath: ImageConstant.imgUser2,
+                          height: getSize(63.00),
+                          width: getSize(63.00))
+                          :  CircleAvatar(
+                      radius: 31.5,
+                      backgroundImage: NetworkImage(
+                          data['image']),),])))
                 ]),
-            body: Column(
+            body: SingleChildScrollView(child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -150,19 +158,19 @@ class _CustomerHomeScreen extends State<CustomerHomeScreen> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             CustomButton(
-                                width: 173,
-                                text: "msg_fast_appointment".tr.toUpperCase(),
-                                onTap: () {Navigator.push(
-                                   context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            NavbarCustomerPage(selectedindex: 1,)));},
+                              width: 173,
+                              text: "msg_fast_appointment".tr.toUpperCase(),
+                              onTap: () {Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          NavbarCustomerPage(selectedindex: 1,)));},
                             ),
                             CustomButton(
-                                width: 139,
-                                text: "lbl_check_order".tr.toUpperCase(),
-                                margin: getMargin(left: 6),
-                                variant: ButtonVariant.FillLightgreen800,
+                              width: 139,
+                              text: "lbl_check_order".tr.toUpperCase(),
+                              margin: getMargin(left: 6),
+                              variant: ButtonVariant.FillLightgreen800,
                               onTap: () {Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -179,23 +187,22 @@ class _CustomerHomeScreen extends State<CustomerHomeScreen> {
                               style: AppStyle.txtRubikRegular14
                                   .copyWith(height: 1.21)))),
                   Padding(
-                      padding: getPadding(left: 28, top: 10, right: 27),
-                      child: Obx(() => GridView.builder(
-                          shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisExtent: getVerticalSize(105.00),
-                                  crossAxisCount: 3,
-                                  mainAxisSpacing: getHorizontalSize(12.13),
-                                  crossAxisSpacing: getHorizontalSize(12.13)),
-                          physics: BouncingScrollPhysics(),
-                          itemCount: controller
-                              .CustomerHomeScreenModelObj.value.CustomerHomeScreenItemList.length,
-                          itemBuilder: (context, index) {
-                            CustomerHomeScreenItemModel model = controller
-                                .CustomerHomeScreenModelObj.value.CustomerHomeScreenItemList[index];
-                            return CustomerHomeScreenItemWidget(model);
-                          }))),
+                    padding: getPadding(left: 28, top: 10, right: 27),
+                    child: GridView.count(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 6,
+                        padding: getPadding(left: 10,right: 10),
+                        children: <Widget>[
+                          RepeatedTile(label: 'Cleaning'.toUpperCase(), image: ImageConstant.img29298converted, iheight: 78, iwidth: 90),
+                          RepeatedTile(label: 'Electrician'.toUpperCase(), image: ImageConstant.img40999converted, iheight: 78, iwidth: 66),
+                          RepeatedTile(label: 'Plumber'.toUpperCase(), image: ImageConstant.img19191converted, iheight: 84, iwidth: 66),
+                          RepeatedTile(label: 'Mechanic'.toUpperCase(), image: ImageConstant.img17205converted, iheight: 60, iwidth: 114),
+                          RepeatedTile(label: 'Construction'.toUpperCase(), image: ImageConstant.img51384361, iheight: 80, iwidth: 114),
+                          RepeatedTile(label: 'Logistic'.toUpperCase(), image: ImageConstant.imgLogisticworkers, iheight: 60, iwidth: 114)
+                        ]
+                    ),),
                   Align(
                       alignment: Alignment.centerRight,
                       child: Padding(
@@ -212,19 +219,19 @@ class _CustomerHomeScreen extends State<CustomerHomeScreen> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 CategoryPageScreen())); },
-                                    child: Text("lbl_more_category".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: AppStyle.txtRobotoRomanMedium14
-                                            .copyWith(height: 1.21)))),
+                                        child: Text("lbl_more_category".tr,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.left,
+                                            style: AppStyle.txtRobotoRomanMedium14
+                                                .copyWith(height: 1.21)))),
                                 Padding(padding: getPadding(top: 5, bottom: 18, right: 10),
-                                  child:CommonImageView(
-                                    svgPath: ImageConstant.imgArrowright,
-                                    height: getSize(24.00),
-                                    width: getSize(24.00)))
+                                    child:CommonImageView(
+                                        svgPath: ImageConstant.imgArrowright,
+                                        height: getSize(24.00),
+                                        width: getSize(24.00)))
                               ])))
                 ]
-    ));
+            )));
     }return const Center(
       child: CircularProgressIndicator(
         color: Colors.purple,

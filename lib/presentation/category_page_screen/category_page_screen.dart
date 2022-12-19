@@ -17,7 +17,8 @@ class CategoryPageScreen extends GetWidget<CategoryPageController> {
             ),
             backgroundColor: ColorConstant.gray900,
             body: GridView.count(
-              crossAxisCount: 3,
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: 3,
               crossAxisSpacing: 6,
               padding: getPadding(left: 10,right: 10),
               children: <Widget>[

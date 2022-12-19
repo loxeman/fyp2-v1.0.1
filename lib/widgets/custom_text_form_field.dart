@@ -21,7 +21,9 @@ class CustomTextFormField extends StatelessWidget {
       this.suffix,
       this.suffixConstraints,
       this.validator,
-      this.onChanged});
+      this.onChanged,
+      this.onSaved,
+      this.initialValue});
 
   TextFormFieldShape? shape;
 
@@ -60,6 +62,11 @@ class CustomTextFormField extends StatelessWidget {
   FormFieldValidator<String>? validator;
 
   ValueChanged<String>? onChanged;
+
+  ValueSetter<String?>? onSaved;
+
+  String? initialValue;
+
 
   @override
   Widget build(BuildContext context) {

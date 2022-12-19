@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fyp2/Tool/appbar_widgets.dart';
 import 'package:fyp2/Tool/auth_handler.dart';
 import 'package:fyp2/presentation/forget_password_page_screen/forget_password_page_screen.dart';
 import 'package:fyp2/presentation/sign_up_page_customer_screen/sign_up_page_customer_screen.dart';
@@ -125,25 +126,16 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            backgroundColor: ColorConstant.gray901,
-            body: Form(
+            backgroundColor: ColorConstant.gray900,
+            appBar: AppBar(backgroundColor: ColorConstant.gray900,
+                            leading: AppBarBackButton(),),
+            body: SingleChildScrollView(
+                child:Form(
                 key: _formKey,
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                              padding: getPadding(left: 8, top: 9, right: 10),
-                              child: InkWell(
-                                  onTap: () {
-                                    onTapImgArrowleft();
-                                  },
-                                  child: CommonImageView(
-                                      svgPath: ImageConstant.imgArrowleft,
-                                      height: getSize(24.00),
-                                      width: getSize(24.00))))),
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
@@ -210,16 +202,28 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Padding(
-                                        padding: getPadding(top: 4, bottom: 2),
-                                                child: Text("msg_forget_your_password".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.
-                                                    txtRobotoRomanMedium14
-                                                    .copyWith(height: 1.21))),
+                                        padding: getPadding(),
+                                        child: TextButton(onPressed: (){Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForgetPasswordPageScreen()));},
+                                            child: Text("msg_forget_your_password".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.
+                                            txtRobotoRomanMedium14
+                                                .copyWith(height: 1.21)))
+                                    ),
                                     Padding(
-                                        padding: getPadding(left: 3),
-                                        child: CommonImageView(
-                                            svgPath: ImageConstant.imgArrowright,
-                                            height: getSize(24.00),
-                                            width: getSize(24.00)))
+                                        padding: getPadding(top: 10),
+                                        child: InkWell(onTap: (){Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForgetPasswordPageScreen()));},
+                                            child: CommonImageView(
+                                                svgPath: ImageConstant.imgArrowright,
+                                                height: getSize(50.00),
+                                                width: getSize(40.00)))
+                                    )
                                   ]))),
                       CustomButton(
                         width: 200,
@@ -264,7 +268,7 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
                                                     .txtRobotoRomanMedium20IndigoA700
                                                     .copyWith(height: 1.20))))
                                   ]))),
-                      Align(
+                      /*Align(
                           alignment: Alignment.center,
                           child: Padding(
                               padding: getPadding(left: 14, top: 40, right: 14),
@@ -324,51 +328,9 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
                                                               getHorizontalSize(
                                                                   23.00)))))
                                             ]))),
-                                    Card(
-                                        clipBehavior: Clip.antiAlias,
-                                        elevation: 0,
-                                        margin: getMargin(left: 16),
-                                        color: ColorConstant.whiteA700,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder25),
-                                        child: Container(
-                                            height: getVerticalSize(64.00),
-                                            width: getHorizontalSize(92.00),
-                                            decoration: AppDecoration
-                                                .outlineBlack9000c
-                                                .copyWith(
-                                                borderRadius:
-                                                BorderRadiusStyle
-                                                    .roundedBorder25),
-                                            child: Stack(children: [
-                                              Align(
-                                                  alignment: Alignment.center,
-                                                  child: Padding(
-                                                      padding: getPadding(
-                                                          left: 34,
-                                                          top: 20,
-                                                          right: 34,
-                                                          bottom: 5),
-                                                      child: InkWell(
-                                                          onTap: () {
-                                                            onTapImgFacebook();
-                                                          },
-                                                          child: CommonImageView(
-                                                              svgPath:
-                                                              ImageConstant
-                                                                  .imgFacebook,
-                                                              height: getSize(
-                                                                  24.00),
-                                                              width: getSize(
-                                                                  24.00)))))
-                                            ])))
-                                  ])))
-                    ]))));
-  }
-
-  onTapImgArrowleft() {
-    Get.back();
+                                  ])))*/
+                    ])))
+            ));
   }
 
   onTapImgFacebook() async {

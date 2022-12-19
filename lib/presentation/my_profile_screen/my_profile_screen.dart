@@ -309,7 +309,7 @@ class _MyProfileScreen extends State<MyProfileScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  EditProfilePageScreen())); },
+                                                  EditProfilePageScreen(data: data))); },
                                           child: CommonImageView(
                                               svgPath: ImageConstant
                                                   .imgArrowrightBluegray200,

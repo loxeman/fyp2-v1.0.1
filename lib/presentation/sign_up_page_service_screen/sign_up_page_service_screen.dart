@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fyp2/Tool/appbar_widgets.dart';
 import 'package:fyp2/Tool/auth_handler.dart';
+import 'package:fyp2/presentation/login_page_service_screen/login_page_service_screen.dart';
 import 'package:fyp2/widgets/auth_widgets.dart';
 import 'package:fyp2/widgets/snackbar.dart';
-
 import 'controller/sign_up_page_service_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/app_export.dart';
-import 'package:fyp2/core/utils/validation_functions.dart';
 import 'package:fyp2/widgets/custom_button.dart';
 import 'package:fyp2/widgets/custom_text_form_field.dart';
 import 'package:fyp2/domain/googleauth/google_auth_helper.dart';
@@ -55,9 +55,13 @@ class _SignUpPageServiceScreen extends State<SignUpPageServiceScreen> {
             'storename': storeName,
             'email': email,
             'mobile': mobile,
-            'address' : '',
+            'location' : '',
             'sid': _uid,
             'coverimage': '',
+            'open': '',
+            'close': '',
+            'status' : 'online'
+
           });
           _formKey.currentState!.reset();
 
@@ -102,39 +106,29 @@ class _SignUpPageServiceScreen extends State<SignUpPageServiceScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            backgroundColor: ColorConstant.gray901,
-            body: Form(
-                key: _formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                              padding: getPadding(left: 8, top: 9, right: 10),
-                              child: InkWell(
-                                  onTap: () {
-                                    onTapImgArrowleft();
-                                  },
-                                  child: CommonImageView(
-                                      svgPath: ImageConstant.imgArrowleft,
-                                      height: getSize(24.00),
-                                      width: getSize(24.00))))),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                              padding: getPadding(left: 14, top: 27, right: 14),
-                              child: Text("lbl_sign_up".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: AppStyle.txtRobotoRomanBold34))),
-                      CustomTextFormField(
+            backgroundColor: ColorConstant.gray900,
+            appBar: AppBar(backgroundColor: ColorConstant.gray900,
+                            leading: AppBarBackButton()),
+            body: SingleChildScrollView(
+              child:Form(
+                  key: _formKey,
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                                padding: getPadding(left: 14, top: 27, right: 14),
+                                child: Text("lbl_sign_up".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtRobotoRomanBold34))),
+                        CustomTextFormField(
                           width: 320,
                           focusNode: FocusNode(),
                           controller:
-                              controller.textFieldOrdinaryInactiveController,
+                          controller.textFieldOrdinaryInactiveController,
                           hintText: "lbl_store_name".tr,
                           margin: getMargin(left: 14, top: 73, right: 14),
                           variant: TextFormFieldVariant.OutlineBlack9000c,
@@ -142,119 +136,130 @@ class _SignUpPageServiceScreen extends State<SignUpPageServiceScreen> {
                           padding: TextFormFieldPadding.PaddingAll23,
                           fontStyle: TextFormFieldFontStyle.RobotoRomanMedium14,
                           alignment: Alignment.center,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'please enter your store name';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          storeName = value;
-                        },),
-                      CustomTextFormField(
-                          width: 320,
-                          focusNode: FocusNode(),
-                          controller:
-                              controller.textFieldOrdinaryInactiveOneController,
-                          hintText: "lbl_email".tr,
-                          margin: getMargin(left: 14, top: 8, right: 14),
-                          variant: TextFormFieldVariant.OutlineBlack9000c,
-                          shape: TextFormFieldShape.RoundedBorder4,
-                          padding: TextFormFieldPadding.PaddingAll23,
-                          fontStyle: TextFormFieldFontStyle.RobotoRomanMedium14,
-                          alignment: Alignment.center,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'please enter your email ';
-                            } else if (value.isValidEmail() == false) {
-                              return 'invalid email';
-                            } else if (value.isValidEmail() == true) {
+                              return 'please enter your store name';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            storeName = value;
+                          },),
+                        CustomTextFormField(
+                            width: 320,
+                            focusNode: FocusNode(),
+                            controller:
+                            controller.textFieldOrdinaryInactiveOneController,
+                            hintText: "lbl_email".tr,
+                            margin: getMargin(left: 14, top: 8, right: 14),
+                            variant: TextFormFieldVariant.OutlineBlack9000c,
+                            shape: TextFormFieldShape.RoundedBorder4,
+                            padding: TextFormFieldPadding.PaddingAll23,
+                            fontStyle: TextFormFieldFontStyle.RobotoRomanMedium14,
+                            alignment: Alignment.center,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'please enter your email ';
+                              } else if (value.isValidEmail() == false) {
+                                return 'invalid email';
+                              } else if (value.isValidEmail() == true) {
+                                return null;
+                              }
                               return null;
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            email = value;
-                          }),
-                      CustomTextFormField(
-                          width: 320,
-                          focusNode: FocusNode(),
-                          controller:
-                              controller.textFieldOrdinaryInactiveTwoController,
-                          hintText: "lbl_password".tr,
-                          margin: getMargin(left: 14, top: 8, right: 14),
-                          variant: TextFormFieldVariant.OutlineBlack9000c,
-                          shape: TextFormFieldShape.RoundedBorder4,
-                          padding: TextFormFieldPadding.PaddingAll23,
-                          fontStyle: TextFormFieldFontStyle.RobotoRomanMedium14,
-                          alignment: Alignment.center,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'please enter your password';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            password = value;
-                          },
-                          isObscureText: true),
-                      CustomTextFormField(
-                          width: 320,
-                          focusNode: FocusNode(),
-                          controller: controller
-                              .textFieldOrdinaryInactiveThreeController,
-                          hintText: "lbl_mobile_number".tr,
-                          margin: getMargin(left: 14, top: 8, right: 14),
-                          variant: TextFormFieldVariant.OutlineBlack9000c,
-                          shape: TextFormFieldShape.RoundedBorder4,
-                          padding: TextFormFieldPadding.PaddingAll23,
-                          fontStyle: TextFormFieldFontStyle.RobotoRomanMedium14,
-                          textInputAction: TextInputAction.done,
-                          alignment: Alignment.center,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'please enter your mobile number';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            mobile = value;
-                          }),
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                              padding: getPadding(left: 27, top: 9, right: 27),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Padding(
-                                        padding: getPadding(top: 4, bottom: 2),
-                                        child: TextButton(onPressed: () { Navigator.pushReplacementNamed(
-                                            context, '/sign_up_page_service_screen'); },
-                                        child: Text("msg_already_have_an".tr,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: AppStyle
-                                                .txtRobotoRomanMedium14
-                                                .copyWith(height: 1.21)))),
-                                    Padding(
-                                        padding: getPadding(left: 1),
-                                        child: CommonImageView(
-                                            svgPath:
-                                                ImageConstant.imgArrowright,
-                                            height: getSize(24.00),
-                                            width: getSize(24.00)))
-                                  ]))),
-                      CustomButton(
-                          width: 200,
-                          text: "lbl_sign_up2".tr,
-                          margin: getMargin(left: 14, top: 31, right: 14),
-                          alignment: Alignment.center,
-                          onTap: () {
-                                signUp();}),
-                      Align(
+                            },
+                            onChanged: (value) {
+                              email = value;
+                            }),
+                        CustomTextFormField(
+                            width: 320,
+                            focusNode: FocusNode(),
+                            controller:
+                            controller.textFieldOrdinaryInactiveTwoController,
+                            hintText: "lbl_password".tr,
+                            margin: getMargin(left: 14, top: 8, right: 14),
+                            variant: TextFormFieldVariant.OutlineBlack9000c,
+                            shape: TextFormFieldShape.RoundedBorder4,
+                            padding: TextFormFieldPadding.PaddingAll23,
+                            fontStyle: TextFormFieldFontStyle.RobotoRomanMedium14,
+                            alignment: Alignment.center,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'please enter your password';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              password = value;
+                            },
+                            isObscureText: true),
+                        CustomTextFormField(
+                            width: 320,
+                            focusNode: FocusNode(),
+                            controller: controller
+                                .textFieldOrdinaryInactiveThreeController,
+                            hintText: "lbl_mobile_number".tr,
+                            margin: getMargin(left: 14, top: 8, right: 14),
+                            variant: TextFormFieldVariant.OutlineBlack9000c,
+                            shape: TextFormFieldShape.RoundedBorder4,
+                            padding: TextFormFieldPadding.PaddingAll23,
+                            fontStyle: TextFormFieldFontStyle.RobotoRomanMedium14,
+                            textInputAction: TextInputAction.done,
+                            alignment: Alignment.center,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'please enter your mobile number';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              mobile = value;
+                            }),
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                                padding: getPadding(left: 27, top: 9, right: 27),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Padding(
+                                          padding: getPadding(),
+                                          child: TextButton(onPressed: () { Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginPageServiceScreen())); },
+                                              child: Text("msg_already_have_an".tr,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: AppStyle
+                                                      .txtRobotoRomanMedium14
+                                                      .copyWith(height: 1.21)))),
+                                      Padding(
+                                          padding: getPadding(top: 10),
+                                          child: InkWell(
+                                              onTap: (){Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          LoginPageServiceScreen()));
+                                              },
+                                              child: CommonImageView(
+                                                  svgPath: ImageConstant
+                                                      .imgArrowright24x24,
+                                                  height: getSize(50.00),
+                                                  width: getSize(40.00)))
+                                      )
+                                    ]))),
+                        CustomButton(
+                            width: 200,
+                            text: "lbl_sign_up2".tr,
+                            margin: getMargin(left: 14, top: 31, right: 14),
+                            alignment: Alignment.center,
+                            onTap: () {
+                              signUp();}),
+                        /*Align(
                           alignment: Alignment.center,
                           child: Padding(
                               padding: getPadding(left: 14, top: 56, right: 14),
@@ -314,47 +319,9 @@ class _SignUpPageServiceScreen extends State<SignUpPageServiceScreen> {
                                                                   getHorizontalSize(
                                                                       23.00)))))
                                             ]))),
-                                    Card(
-                                        clipBehavior: Clip.antiAlias,
-                                        elevation: 0,
-                                        margin: getMargin(left: 16),
-                                        color: ColorConstant.whiteA700,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder25),
-                                        child: Container(
-                                            height: getVerticalSize(64.00),
-                                            width: getHorizontalSize(92.00),
-                                            decoration: AppDecoration
-                                                .outlineBlack9000c
-                                                .copyWith(
-                                                    borderRadius:
-                                                        BorderRadiusStyle
-                                                            .roundedBorder25),
-                                            child: Stack(children: [
-                                              Align(
-                                                  alignment: Alignment.center,
-                                                  child: Padding(
-                                                      padding: getPadding(
-                                                          left: 34,
-                                                          top: 20,
-                                                          right: 34,
-                                                          bottom: 5),
-                                                      child: InkWell(
-                                                          onTap: () {
-                                                            onTapImgFacebook();
-                                                          },
-                                                          child: CommonImageView(
-                                                              svgPath:
-                                                                  ImageConstant
-                                                                      .imgFacebook,
-                                                              height: getSize(
-                                                                  24.00),
-                                                              width: getSize(
-                                                                  24.00)))))
-                                            ])))
-                                  ])))
-                    ]))));
+                                  ])))*/
+                      ])) ,)
+            ));
   }
 
   onTapImgArrowleft() {

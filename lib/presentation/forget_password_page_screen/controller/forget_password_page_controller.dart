@@ -3,8 +3,6 @@ import 'package:fyp2/presentation/forget_password_page_screen/models/forget_pass
 import 'package:flutter/material.dart';
 
 class ForgetPasswordPageController extends GetxController {
-  TextEditingController textFieldOrdinaryActivatedController =
-      TextEditingController();
 
   Rx<ForgetPasswordPageModel> forgetPasswordPageModelObj =
       ForgetPasswordPageModel().obs;
@@ -17,6 +15,5 @@ class ForgetPasswordPageController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    textFieldOrdinaryActivatedController.dispose();
   }
 }

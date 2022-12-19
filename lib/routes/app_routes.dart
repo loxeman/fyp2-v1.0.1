@@ -284,7 +284,7 @@ class AppRoutes {
     ),
     GetPage(
       name: editProfilePageScreen,
-      page: () => EditProfilePageScreen(),
+      page: () => EditProfilePageScreen(data: ''),
       bindings: [
         EditProfilePageBinding(),
       ],
