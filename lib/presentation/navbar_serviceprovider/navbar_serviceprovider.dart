@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp2/presentation/dashboard_page_screen/dashboard_page_screen.dart';
 import 'package:fyp2/presentation/edit_service_page_screen/edit_service_page_screen.dart';
+import 'package:fyp2/presentation/job_page_pending_page/job_page.dart';
 import 'package:fyp2/presentation/job_page_pending_page/job_page_pending_page.dart';
 import 'package:fyp2/presentation/service_provider_homepage_screen/service_provider_homepage_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -22,8 +24,8 @@ class _NavbarServiceProviderPageState extends State<NavbarServiceProviderPage> {
   }
 
   final List<Widget> _pages = [
-    ServiceProviderHomepageScreen(),
-    JobPagePendingPage(),
+    ServiceProviderHomepageScreen(suppId: FirebaseAuth.instance.currentUser!.uid),
+    JobPage(),
     EditServicePageScreen(),
     DashboardPageScreen(),
   ];
@@ -33,23 +35,31 @@ class _NavbarServiceProviderPageState extends State<NavbarServiceProviderPage> {
     return Scaffold(
       body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: GNav(
+        gap: 2,
+        iconSize: 18,
+          activeColor: Colors.white,
+          backgroundColor: Colors.indigo.shade700,
           onTabChange: _navigateBottomBar,
           tabs: const[
             GButton(
               icon: Icons.store,
               text: "Store",
+              iconColor: Colors.grey,
             ),
             GButton(
               icon: Icons.work,
               text: "Jobs",
+              iconColor: Colors.grey,
             ),
             GButton(
               icon: Icons.design_services,
               text: "Services",
+              iconColor: Colors.grey,
             ),
             GButton(
               icon: Icons.dashboard,
               text: "Dashboard",
+              iconColor: Colors.grey,
             ),
           ]
       ),

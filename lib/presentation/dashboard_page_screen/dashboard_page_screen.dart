@@ -1,143 +1,119 @@
-import '../dashboard_page_screen/widgets/dashboard_page_item_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fyp2/Tool/appbar_widgets.dart';
+import 'package:fyp2/Tool/auth_handler.dart';
+import 'package:fyp2/presentation/edit_service_page_screen/edit_service_page_screen.dart';
+import 'package:fyp2/presentation/edit_store_page_screen/edit_store_page_screen.dart';
+import 'package:fyp2/presentation/job_page_pending_page/job_page.dart';
+import 'package:fyp2/presentation/service_provider_homepage_screen/service_provider_homepage_screen.dart';
+import 'package:fyp2/presentation/wallet_page_screen/wallet_page_screen.dart';
+import 'package:fyp2/widgets/alert_dialog.dart';
 import 'controller/dashboard_page_controller.dart';
-import 'models/dashboard_page_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/app_export.dart';
 import 'package:fyp2/widgets/custom_button.dart';
 
+List<String> label = [
+  'my store',
+  'orders',
+  'edit profile',
+  'manage services',
+  'balance',
+];
+
+List<IconData> icons = [
+  Icons.store,
+  Icons.shop_2_outlined,
+  Icons.edit,
+  Icons.settings,
+  Icons.attach_money,
+];
+
+List<Widget> pages = [
+  ServiceProviderHomepageScreen(suppId: FirebaseAuth.instance.currentUser!.uid),
+  const JobPage(),
+  const EditStorePageScreen(),
+  EditServicePageScreen(),
+  WalletPageScreen(),
+];
+
+
 class DashboardPageScreen extends GetWidget<DashboardPageController> {
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          appBar: AppBar(
             backgroundColor: ColorConstant.gray900,
-            body: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Expanded(
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: SingleChildScrollView(
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                        padding: getPadding(
-                                            left: 8, top: 9, right: 10),
-                                        child: InkWell(
-                                            onTap: () {
-                                              onTapImgArrowleft();
-                                            },
-                                            child: CommonImageView(
-                                                svgPath:
-                                                    ImageConstant.imgArrowleft,
-                                                height: getSize(24.00),
-                                                width: getSize(24.00))))),
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                        padding: getPadding(
-                                            left: 14, top: 23, right: 14),
-                                        child: Text("lbl_dashboard".tr,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: AppStyle
-                                                .txtRobotoRomanBold34))),
-                                Align(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                        padding: getPadding(
-                                            left: 14, top: 24, right: 14),
-                                        child: Obx(() => GridView.builder(
-                                            shrinkWrap: true,
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                    mainAxisExtent: getVerticalSize(
-                                                        186.00),
-                                                    crossAxisCount: 2,
-                                                    mainAxisSpacing:
-                                                        getHorizontalSize(
-                                                            19.26),
-                                                    crossAxisSpacing:
-                                                        getHorizontalSize(
-                                                            19.26)),
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            itemCount: controller
-                                                .dashboardPageModelObj
-                                                .value
-                                                .dashboardPageItemList
-                                                .length,
-                                            itemBuilder: (context, index) {
-                                              DashboardPageItemModel model =
-                                                  controller
-                                                          .dashboardPageModelObj
-                                                          .value
-                                                          .dashboardPageItemList[
-                                                      index];
-                                              return DashboardPageItemWidget(
-                                                  model);
-                                            })))),
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                        width: getHorizontalSize(150.00),
-                                        margin: getMargin(
-                                            left: 28, top: 23, right: 28),
-                                        decoration: AppDecoration.fillWhiteA700
-                                            .copyWith(
-                                                borderRadius: BorderRadiusStyle
-                                                    .circleBorder6),
-                                        child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: CommonImageView(
-                                                      imagePath: ImageConstant
-                                                          .imgInsertpictureicon135x136,
-                                                      height: getVerticalSize(
-                                                          151.00),
-                                                      width: getHorizontalSize(
-                                                          150.00))),
-                                              Padding(
-                                                  padding: getPadding(
-                                                      left: 54,
-                                                      top: 7,
-                                                      right: 53,
-                                                      bottom: 8),
-                                                  child: Text("lbl_wallet".tr,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: AppStyle
-                                                          .txtRobotoRomanRegular15))
-                                            ]))),
-                                CustomButton(
-                                    width: 200,
-                                    text: "lbl_log_out".tr,
-                                    margin: getMargin(
-                                        left: 14,
-                                        top: 29,
-                                        right: 14,
-                                        bottom: 5),
-                                    variant: ButtonVariant.FillRed900,
-                                    alignment: Alignment.center)
-                              ]))))
-                ])));
-  }
+            elevation: 0,
+            centerTitle: true,
+            title: AppBarTitle(title: 'Dashboard',),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    MyAlertDilaog.showMyDialog(
+                        context: context,
+                        title: 'Log Out',
+                        content:
+                        'Are you sure to log out ?',
+                        tabNo: () {
+                          Navigator.pop(context);
+                        },
+                        tabYes: () async {
+                          await AuthRepo.logOut();
 
-  onTapImgArrowleft() {
-    Get.back();
-  }
-}
+                          await Future.delayed(
+                              const Duration(
+                                  microseconds:
+                                  100))
+                              .whenComplete(() {
+                            Navigator.pop(context);
+                            Navigator
+                                .pushReplacementNamed(
+                                context,
+                                '/Welcome_page_screen');
+                          });
+                        });
+                  },
+                  icon: const Icon(
+                    Icons.logout,
+                  ))
+            ],),
+            backgroundColor: ColorConstant.gray900,
+            body:
+             Padding(
+                 padding: getPadding(
+                     left: 14, top: 24, right: 14, bottom: 24),
+                 child: GridView.count(
+                   mainAxisSpacing: 7,
+                   crossAxisSpacing: 7,
+                   crossAxisCount: 2,
+
+                   children: List.generate(5, (index) {
+                     return InkWell(
+                       onTap: () {
+                         Navigator.push(context,
+                             MaterialPageRoute(builder: (context) => pages[index]));},
+                       child: Card(
+                         shadowColor: Colors.purpleAccent.shade200,
+                         color: ColorConstant.whiteA700,
+                         child: Column(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                             Icon(
+                               icons[index],
+                               size: 50,
+                               color: ColorConstant.indigoA700,),
+                             Text(
+                               label[index].toUpperCase(),
+                               style: const TextStyle(
+                                   fontSize: 12,
+                                   color: Colors.indigo,
+                                   fontWeight: FontWeight.w600,
+                                   letterSpacing: 2,
+                                   fontFamily: 'Roboto'),
+                             )],),),);}),
+                                ))),
+    );
+  }}
+

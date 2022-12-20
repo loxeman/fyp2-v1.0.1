@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/utils/color_constant.dart';
 import 'package:fyp2/core/utils/size_utils.dart';
+import 'package:fyp2/presentation/serviie_provider_page_available_screen/models/service_page_detail_model.dart';
 import 'package:fyp2/theme/app_decoration.dart';
 import 'package:fyp2/theme/app_style.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
@@ -12,7 +13,14 @@ class SearchPageModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return InkWell(onTap:(){
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ServicePageDetailModel(
+                services: services,
+              )));},
+      child:Padding(
       padding: getPadding(top:10,right: 25,left: 25),
       child: Container(
         decoration: AppDecoration.fillWhiteA700.copyWith(
@@ -147,38 +155,39 @@ class SearchPageModel extends StatelessWidget {
               ),
             ),
             Padding(padding: getPadding(top: 30),
-            child: Container(
-              alignment: Alignment.bottomRight,
-            child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: "lbl_booking_price".tr,
-              style: TextStyle(
-                color: ColorConstant.black900,
-                fontSize: getFontSize(
-                  11,
+              child: Container(
+                alignment: Alignment.bottomRight,
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "lbl_booking_price".tr,
+                        style: TextStyle(
+                          color: ColorConstant.black900,
+                          fontSize: getFontSize(
+                            11,
+                          ),
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'RM '+services['price'],
+                        style: TextStyle(
+                          color: ColorConstant.black900,
+                          fontSize: getFontSize(
+                            11,
+                          ),
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            TextSpan(
-              text: 'RM '+services['price'],
-              style: TextStyle(
-                color: ColorConstant.black900,
-                fontSize: getFontSize(
-                  11,
-                ),
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+              ),)
           ],
         ),
-        textAlign: TextAlign.center,
-      ),
-    ),)
-          ],
-        ),
-      ),);}}
+      ),));
+      }}

@@ -8,8 +8,17 @@ import 'package:fyp2/widgets/custom_button.dart';
 import 'package:fyp2/widgets/custom_text_form_field.dart';
 
 // ignore_for_file: must_be_immutable
-class SetAppointmentScreen extends GetWidget<SetAppointmentController> {
+class SetAppointmentScreen extends StatefulWidget {
+
+  const SetAppointmentScreen({Key? key,}) : super(key: key);
+
+  @override
+  State<SetAppointmentScreen> createState() => _SetAppointmentScreen();
+}
+
+class _SetAppointmentScreen extends State<SetAppointmentScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final controller = Get.put(SetAppointmentController());
 
   @override
   Widget build(BuildContext context) {

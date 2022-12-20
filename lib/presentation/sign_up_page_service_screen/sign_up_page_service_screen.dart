@@ -60,7 +60,8 @@ class _SignUpPageServiceScreen extends State<SignUpPageServiceScreen> {
             'coverimage': '',
             'open': '',
             'close': '',
-            'status' : 'online'
+            'status' : 'online',
+            'desc' : ''
 
           });
           _formKey.currentState!.reset();

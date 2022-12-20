@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/presentation/home_screen/home_screen.dart';
 import 'package:fyp2/presentation/home_screen/binding/home_binding.dart';
 import 'package:fyp2/presentation/navbar/Binding/navbar_binding.dart';
@@ -57,7 +58,6 @@ class AppRoutes {
   static String navbarcustomer = '/navbarcustomer_screen';
 
   static String navbarserviceprovider = '/navbarserviceprovider_screen';
-
 
   static String customerHomeScreen = '/home_screen';
 
@@ -204,7 +204,7 @@ class AppRoutes {
     ),
     GetPage(
       name: serviceProviderHomepageScreen,
-      page: () => ServiceProviderHomepageScreen(),
+      page: () => ServiceProviderHomepageScreen(suppId: FirebaseAuth.instance.currentUser!.uid),
       bindings: [
         ServiceProviderHomepageBinding(),
       ],
@@ -277,7 +277,7 @@ class AppRoutes {
 
     GetPage(
       name: editServicePageOneScreen,
-      page: () => EditServicePageOneScreen(),
+      page: () => EditServicePageOneScreen(services: ''),
       bindings: [
         EditServicePageOneBinding(),
       ],

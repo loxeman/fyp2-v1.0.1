@@ -6,8 +6,18 @@ import 'package:fyp2/widgets/custom_button.dart';
 import 'package:fyp2/widgets/custom_text_form_field.dart';
 
 // ignore_for_file: must_be_immutable
-class EditServicePageOneScreen extends GetWidget<EditServicePageOneController> {
+class EditServicePageOneScreen extends StatefulWidget {
+final dynamic services;
+const EditServicePageOneScreen({Key? key, required this.services}) : super(key: key);
+
+@override
+State<EditServicePageOneScreen> createState() => _EditStorePageScreen();
+}
+
+class _EditStorePageScreen extends State<EditServicePageOneScreen> {
+
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final controller=Get.put(EditServicePageOneController());
 
   @override
   Widget build(BuildContext context) {

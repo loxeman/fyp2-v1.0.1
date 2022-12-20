@@ -304,7 +304,7 @@ class _MyProfileScreen extends State<MyProfileScreen> {
                                                     .txtRobotoRomanRegular20))
                                       ]),
                                   Padding(
-                                      padding: getPadding(top: 3, bottom: 8, right: 15),
+                                      padding: getPadding(top: 8, bottom: 5, right: 15),
                                       child: InkWell(onTap: (){ Navigator.push(
                                           context,
                                           MaterialPageRoute(

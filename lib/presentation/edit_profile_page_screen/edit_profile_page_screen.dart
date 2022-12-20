@@ -1,16 +1,11 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/Tool/appbar_widgets.dart';
 import 'package:fyp2/widgets/snackbar.dart';
-
-import 'controller/edit_profile_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/app_export.dart';
-import 'package:fyp2/core/utils/validation_functions.dart';
 import 'package:fyp2/widgets/custom_button.dart';
-import 'package:fyp2/widgets/custom_text_form_field.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -65,7 +60,6 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
             .ref('customer-image/${widget.data['email']}.jpg');
 
         await ref.putFile(File(imageFile!.path));
-
         image = await ref.getDownloadURL();
       } catch (e) {
         print(e);
@@ -78,16 +72,17 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
   editProfileData() async {
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentReference documentReference = FirebaseFirestore.instance
-          .collection('suppliers')
+          .collection('customers')
           .doc(FirebaseAuth.instance.currentUser!.uid);
       transaction.update(documentReference, {
         'fname': fname,
         'lname' : lname,
         'mobile': mobile,
-        'image': image,
         'address': address,
       });
-    }).whenComplete(() => Navigator.pop(context));
+    }).whenComplete(() {Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/my_profile_screen');
+    });
   }
 
   saveChanges() async {
@@ -96,9 +91,8 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
       setState(() {
         processing = true;
       });
-      await uploadProfilePicture().whenComplete(() async => editProfileData());
-      MyMessageHandler.showSnackBar(scaffoldKey, 'update completed');
-      Navigator.pop(context);
+      await editProfileData();
+      //Navigator.pop(context);
     } else {
       MyMessageHandler.showSnackBar(scaffoldKey, 'please fill all fields');
     }
@@ -118,211 +112,198 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
             body: SingleChildScrollView(
               child:Form(
                   key: _formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Align(
                             alignment: Alignment.center,
                             child: Padding(
-                              padding: getPadding(left: 14, top: 17, right: 14),
+                              padding: getPadding( top: 17),
                               child:
-                              widget.data['image'] == ''? CommonImageView(imagePath: ImageConstant.imgUser2,
-                                  height: getSize(63.00),
-                                  width: getSize(63.00))
-                                  :  CircleAvatar(
+                              CircleAvatar(
                                 radius: 31.5,
                                 backgroundImage: NetworkImage(
                                     widget.data['image']),),)),
                         CustomButton(
                           width: 163,
                           text: "lbl_change_picture".tr,
-                          margin: getMargin(left: 14, top: 16, right: 14),
+                          margin: getMargin( top: 16, bottom: 12),
                           shape: ButtonShape.RoundedBorder20,
                           padding: ButtonPadding.PaddingAll12,
                           fontStyle: ButtonFontStyle.RobotoRomanRegular16,
                           alignment: Alignment.center,
-                          onTap: (){pickProfilePicture();},),
+                          onTap: (){pickProfilePicture().whenComplete(() async =>
+                          await uploadProfilePicture().whenComplete((){Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                              builder: (context) =>
+                              EditProfilePageScreen(data: widget.data)));
+                          }));},),
                         Align(
                             alignment: Alignment.center,
                             child: Container(
-                                width: double.infinity,
-                                margin: getMargin(left: 14, top: 19, right: 14),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        getHorizontalSize(8.00))),
-                                child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: getPadding(left: 1, right: 10),
-                                          child: Text('First Name',
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtRobotoRomanMedium12
-                                                  .copyWith(
-                                                  letterSpacing: 0.12))),
-                                      CustomTextFormField(
-                                        width: 319,
-                                        focusNode: FocusNode(),
-                                        controller: textController,
-                                        hintText: widget.data['fname'],
-                                        margin: getMargin(top: 5),
-                                        validator: (value) {
-                                          if (!isText(value)) {
-                                            return "Please enter valid text";
-                                          }
-                                          return null;
-                                        },
-                                        onSaved: (value) {
-                                          fname = value!;
-                                        },
-                                        initialValue: widget.data['fname'],)
-                                    ]))),
+                                width: 320,
+                                margin: getMargin( top: 7),
+                                child: TextFormField(
+                                  initialValue: widget.data['fname'],
+                                  focusNode: FocusNode(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter valid text";}
+                                    return null;},
+                                  onSaved: (value) {
+                                    fname = value!;},
+                                  style: TextStyle(color: ColorConstant.gray800,
+                                    fontSize: getFontSize(16,),
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,),
+                                  decoration: InputDecoration(
+                                      labelText: 'First Name',
+                                      labelStyle: TextStyle(color: ColorConstant.gray800,
+                                        fontSize: getFontSize(12,),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w500,),
+                                      hintText: widget.data['fname'],
+                                      hintStyle: TextStyle(color: ColorConstant.gray800,
+                                        fontSize: getFontSize(16,),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w500,),
+                                      fillColor: ColorConstant.whiteA700,
+                                      filled: true,
+                                      border: UnderlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(8.0)))))
+                            )),
                         Align(
                             alignment: Alignment.center,
                             child: Container(
-                                width: double.infinity,
-                                margin: getMargin(left: 14, top: 7, right: 14),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        getHorizontalSize(8.00))),
-                                child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: getPadding(left: 1, right: 10),
-                                          child: Text('Last Name',
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtRobotoRomanMedium12
-                                                  .copyWith(
-                                                  letterSpacing: 0.12))),
-                                      CustomTextFormField(
-                                        width: 319,
-                                        focusNode: FocusNode(),
-                                        controller: textController,
+                                width: 320,
+                                margin: getMargin( top: 7),
+                                child: TextFormField(
+                                    initialValue: widget.data['lname'],
+                                    focusNode: FocusNode(),
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please enter valid text";}
+                                      return null;},
+                                    onSaved: (value) {
+                                      lname = value!;},
+                                    style: TextStyle(color: ColorConstant.gray800,
+                                      fontSize: getFontSize(16,),
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w500,),
+                                    decoration: InputDecoration(
+                                        labelText: 'Last Name',
+                                        labelStyle: TextStyle(color: ColorConstant.gray800,
+                                          fontSize: getFontSize(12,),
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,),
                                         hintText: widget.data['lname'],
-                                        margin: getMargin(top: 5),
-                                        validator: (value) {
-                                          if (!isText(value)) {
-                                            return "Please enter valid text";
-                                          }
-                                          return null;
-                                        },
-                                        onSaved: (value) {
-                                          fname = value!;
-                                        },
-                                        initialValue: widget.data['lname'],)
-                                    ]))),
+                                        hintStyle: TextStyle(color: ColorConstant.gray800,
+                                          fontSize: getFontSize(16,),
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,),
+                                        fillColor: ColorConstant.whiteA700,
+                                      filled: true,
+                                        border: UnderlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(8.0))))
+                                )
+                            )),
                         Align(
                             alignment: Alignment.center,
                             child: Container(
-                                width: double.infinity,
-                                margin: getMargin(left: 14, top: 7, right: 14),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        getHorizontalSize(8.00))),
-                                child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: getPadding(left: 1, right: 10),
-                                          child: Text('Adress',
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtRobotoRomanMedium12
-                                                  .copyWith(
-                                                  letterSpacing: 0.12))),
-                                      CustomTextFormField(
-                                        width: 319,
-                                        focusNode: FocusNode(),
-                                        controller: textController,
-                                        hintText: widget.data['address'] == ''
-                                            ? 'example: Gombak - USA' : widget.data['address'],
-                                        margin: getMargin(top: 5),
-                                        validator: (value) {
-                                          if (!isText(value)) {
-                                            return "Please enter valid text";
-                                          }
-                                          return null;
-                                        },
-                                        onSaved: (value) {
-                                          address = value!;
-                                        },
-                                        initialValue: widget.data['address'],)
-                                    ]))),
+                                width: 320,
+                                margin: getMargin( top: 7),
+                                child: TextFormField(
+                                    initialValue: widget.data['address'],
+                                    focusNode: FocusNode(),
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please enter valid text";}
+                                      return null;},
+                                    onSaved: (value) {
+                                      address = value!;},
+                                    style: TextStyle(color: ColorConstant.gray800,
+                                      fontSize: getFontSize(16,),
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w500,),
+                                    decoration: InputDecoration(
+                                        labelText: 'Address',
+                                        labelStyle: TextStyle(color: ColorConstant.gray800,
+                                          fontSize: getFontSize(12,),
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,),
+                                        hintText: widget.data['address'] == '' ? 'No address' :  widget.data['address'],
+                                        hintStyle: TextStyle(color: ColorConstant.gray800,
+                                          fontSize: getFontSize(16,),
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,),
+                                        fillColor: ColorConstant.whiteA700,
+                                      filled: true,
+                                        border: UnderlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(8.0))))
+                                )
+                            )),
                         Align(
                             alignment: Alignment.center,
                             child: Container(
-                                width: double.infinity,
-                                margin: getMargin(left: 14, top: 9, right: 14),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        getHorizontalSize(8.00))),
-                                child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: getPadding(left: 1, right: 10),
-                                          child: Text("lbl_phone_number".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtRobotoRomanMedium12
-                                                  .copyWith(
-                                                  letterSpacing: 0.12))),
-                                      CustomTextFormField(
-                                        width: 319,
-                                        focusNode: FocusNode(),
-                                        controller: textController,
+                                width: 320,
+                                margin: getMargin( top: 7),
+                                child: TextFormField(
+                                    initialValue: widget.data['mobile'],
+                                    focusNode: FocusNode(),
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please enter valid text";}
+                                      return null;},
+                                    onSaved: (value) {
+                                      mobile = value!;},
+                                    style: TextStyle(color: ColorConstant.gray800,
+                                      fontSize: getFontSize(16,),
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w500,),
+                                    decoration: InputDecoration(
+                                        labelText: 'Phone Number',
+                                        labelStyle: TextStyle(color: ColorConstant.gray800,
+                                          fontSize: getFontSize(12,),
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,),
                                         hintText: widget.data['mobile'],
-                                        margin: getMargin(top: 5),
-                                        validator: (value) {
-                                          if (!isText(value)) {
-                                            return "Please enter valid text";
-                                          }
-                                          return null;
-                                        },
-                                        onSaved: (value) {
-                                          mobile = value!;
-                                        },
-                                        initialValue: widget.data['mobile'],)
-                                    ]))),
+                                        hintStyle: TextStyle(color: ColorConstant.gray800,
+                                          fontSize: getFontSize(16,),
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,),
+                                        fillColor: ColorConstant.whiteA700,
+                                      filled: true,
+                                        border: UnderlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(8.0))))
+                                )
+                            )),
                         Align(
+                          alignment: Alignment.center,
                           child: Padding(padding: getPadding(),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CustomButton(
-                                  width: 163,
+                                  width: 140,
                                   text: "lbl_update".tr,
                                   margin: getMargin(
-                                      left: 14, top: 60, right: 14, bottom: 5),
+                                      top: 60, bottom: 5, right: 20),
                                   shape: ButtonShape.RoundedBorder20,
                                   padding: ButtonPadding.PaddingAll12,
                                   fontStyle: ButtonFontStyle.RobotoRomanRegular16,
                                   alignment: Alignment.center,
                                   onTap: (){
-                                    processing == true ? MyMessageHandler.showSnackBar(scaffoldKey, 'please wait..')
-                                        : saveChanges();
+                                    saveChanges();
                                   },),
                                 CustomButton(
-                                    width: 163,
+                                    width: 140,
                                     text: 'CANCEL',
                                     margin: getMargin(
-                                        left: 14, top: 60, right: 14, bottom: 5),
+                                        top: 60, bottom: 5),
                                     shape: ButtonShape.RoundedBorder20,
                                     variant: ButtonVariant.FillLightgreen800,
                                     padding: ButtonPadding.PaddingAll12,
@@ -336,5 +317,4 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
                       ])),)
             ));
   }
-
 }

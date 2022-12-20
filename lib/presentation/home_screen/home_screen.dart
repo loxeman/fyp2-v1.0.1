@@ -1,15 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/presentation/category_page_screen/category_page_screen.dart';
-import 'package:fyp2/presentation/my_profile_screen/my_profile_screen.dart';
 import 'package:fyp2/presentation/navbar/navbar.dart';
-import 'package:fyp2/presentation/order_page_pending_page/Order_page.dart';
-import '../home_screen/widgets/home_screen_item_widget.dart';
 import 'controller/home_controller.dart';
-import 'models/home_screen_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/app_export.dart';
-import 'package:fyp2/widgets/app_bar/appbar_image.dart';
 import 'package:fyp2/widgets/app_bar/custom_app_bar.dart';
 import 'package:fyp2/widgets/custom_button.dart';
 import 'package:fyp2/widgets/custom_text_form_field.dart';

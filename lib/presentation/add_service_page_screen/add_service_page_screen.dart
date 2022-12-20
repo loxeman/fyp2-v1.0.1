@@ -6,9 +6,18 @@ import 'package:fyp2/widgets/custom_button.dart';
 import 'package:fyp2/widgets/custom_text_form_field.dart';
 
 // ignore_for_file: must_be_immutable
-class AddServicePageScreen extends GetWidget<AddServicePageController> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class AddServicePageScreen extends StatefulWidget {
 
+const AddServicePageScreen({Key? key}) : super(key: key);
+
+@override
+State<AddServicePageScreen> createState() => _AddServicePageScreen();
+}
+
+class _AddServicePageScreen extends State<AddServicePageScreen> {
+
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final controller=Get.put(AddServicePageController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(

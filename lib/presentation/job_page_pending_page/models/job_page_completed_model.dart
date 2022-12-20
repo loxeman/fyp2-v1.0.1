@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp2/core/app_export.dart';
 import 'package:fyp2/core/utils/color_constant.dart';
 import 'package:fyp2/core/utils/size_utils.dart';
 import 'package:fyp2/theme/app_decoration.dart';
 import 'package:fyp2/theme/app_style.dart';
 import 'package:fyp2/widgets/custom_button.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
-class JobPagePendingModel extends StatelessWidget {
+class JobPageCompletedModel extends StatelessWidget {
 
   final dynamic order;
-  const JobPagePendingModel({Key? key, required this.order}) : super(key: key);
+  const JobPageCompletedModel({Key? key, required this.order}) : super(key: key);
 
 
   @override
@@ -153,32 +153,10 @@ class JobPagePendingModel extends StatelessWidget {
                 ],
               ),
             ),
-            CustomButton(
+          CustomButton(
               width: 62,
-              text: "lbl_accept".tr,
-              onTap: ()async {
-                await FirebaseFirestore.instance
-                    .collection('order')
-                    .doc(order['orderid'])
-                    .update({
-                  'status': 'ongoing',
-                });
-              },
-              margin: getMargin(
-                left: 10,
-                top: 2,
-              ),
-              shape: ButtonShape.CircleBorder12,
-              padding: ButtonPadding.PaddingAll3,
-              fontStyle: ButtonFontStyle.RobotoRomanMedium10,
-            ),
-            CustomButton(
-              width: 62,
-              text: "lbl_reject".tr,
-              onTap: () => FirebaseFirestore.instance.runTransaction((transaction)
-              async => await transaction.delete(order)),
-              margin: getMargin(left: 10, top: 2,),
-              variant: ButtonVariant.FillRed900,
+              text: "lbl_complete".tr,
+              margin: getMargin(top: 10,),
               shape: ButtonShape.CircleBorder12,
               padding: ButtonPadding.PaddingAll3,
               fontStyle: ButtonFontStyle.RobotoRomanMedium10,

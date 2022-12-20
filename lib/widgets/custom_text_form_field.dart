@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/app_export.dart';
 
@@ -23,7 +24,8 @@ class CustomTextFormField extends StatelessWidget {
       this.validator,
       this.onChanged,
       this.onSaved,
-      this.initialValue});
+      this.initialValue,
+      this.value});
 
   TextFormFieldShape? shape;
 
@@ -63,9 +65,11 @@ class CustomTextFormField extends StatelessWidget {
 
   ValueChanged<String>? onChanged;
 
-  ValueSetter<String?>? onSaved;
+  AsyncValueSetter<String>? onSaved;
 
   String? initialValue;
+
+  String? value;
 
 
   @override

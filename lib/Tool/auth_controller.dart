@@ -1,6 +1,7 @@
 
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fyp2/Tool/online_offline.dart';
 import 'package:fyp2/presentation/navbar/navbar.dart';
 import 'package:fyp2/presentation/navbar_serviceprovider/navbar_serviceprovider.dart';
 import 'package:fyp2/routes/app_routes.dart';
@@ -41,8 +42,6 @@ class AuthController extends GetxController{
     }});
 
   }
-
-
 
 
   void register(String email, password)async{
@@ -123,6 +122,10 @@ class AuthController extends GetxController{
   }
 
   void logOut()async{
+    try {
     await auth.signOut();
+    } on FirebaseAuthException catch (e) {
+    print(e.toString());
+    }
   }
 }

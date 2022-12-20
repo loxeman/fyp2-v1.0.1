@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "406953604819",
+    "firebase_url": "https://fir-fyp-1-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "fir-fyp-1",
     "storage_bucket": "fir-fyp-1.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "406953604819-110b764f0sdn4id5je0v1cg7smq4gmig.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "406953604819-t3nmivkbqki68udcdt2fi6eopirpvk6e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.service.fyp"
+              }
             }
           ]
         }

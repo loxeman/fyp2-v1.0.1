@@ -31,10 +31,11 @@ class _NavbarCustomerPageState extends State<NavbarCustomerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages.elementAt(widget.selectedindex),
-      bottomNavigationBar: SizedBox(height: 70,
-        child:GNav(
+      bottomNavigationBar: GNav(
+            gap: 2,
+            iconSize: 18,
           activeColor: Colors.white,
-            backgroundColor: Colors.indigo.shade700,
+            backgroundColor: Colors.indigo.shade900,
           onTabChange: _navigateBottomBar,
           tabs: const[
             GButton(
@@ -58,7 +59,6 @@ class _NavbarCustomerPageState extends State<NavbarCustomerPage> {
               iconColor: Colors.grey,
             ),
           ]
-      ),),
-    );
+      ),);
   }
 }
