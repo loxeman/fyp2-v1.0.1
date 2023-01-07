@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp2/Tool/online_offline.dart';
 
 class AuthRepo {
   static Future<void> singUpWithEmailAndPassword(email, password) async {
@@ -59,6 +60,7 @@ class AuthRepo {
   }
 
   static Future<void> logOut() async {
+    UserPresence().disconnect();
     final auth = FirebaseAuth.instance;
     await auth.signOut();
   }

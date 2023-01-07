@@ -11,6 +11,7 @@ import 'package:fyp2/theme/app_decoration.dart';
 import 'package:fyp2/theme/app_style.dart';
 import 'package:fyp2/widgets/common_image_view.dart';
 import 'package:fyp2/widgets/custom_button.dart';
+import 'package:fyp2/widgets/online_widget.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 class ServicePageDetailModel extends StatefulWidget {
@@ -35,312 +36,224 @@ class _ServicePageDetailModel extends State<ServicePageDetailModel> {
       .doc(widget.services['serid'])
       .collection('reviews')
       .snapshots();*/
+  CollectionReference serviceprovider =
+  FirebaseFirestore.instance.collection('service-provider');
 
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
   GlobalKey<ScaffoldMessengerState>();
   late List<dynamic> imagesList = widget.services['serimages'];
 
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: AppBarBackButton(),
-            ),
-            extendBodyBehindAppBar: true,
-            backgroundColor: ColorConstant.gray900,
-            body: SingleChildScrollView(
-              child:Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                            height: getVerticalSize(185.00),
-                            width: size.width,
-                            decoration: widget.services['coverimage'] == '' ? BoxDecoration(color: ColorConstant.indigoA700)
-                                : BoxDecoration(image: DecorationImage(image: NetworkImage(widget.services['coverimage']), fit: BoxFit.fill)),
-                            child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Padding(
-                                      padding: getPadding(left: 13, top: 10, right: 13, bottom: 10),
-                                      child: Row(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Container(
-                                                height: getVerticalSize(135.00),
-                                                width: getHorizontalSize(136.00),
-                                                child: Stack(
-                                                    alignment:
-                                                    Alignment.centerLeft,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          child: Container(
-                                                              height: getVerticalSize(107.00),
-                                                              width: getHorizontalSize(109.00),
-                                                              margin: getMargin(left: 20, top: 10, right: 12, bottom: 5),
-
-                                                      child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: widget.services['serimages'][0] == '' ? CommonImageView(
-                                                             imagePath: ImageConstant.imgInsertpictureicon135x136,
-                                                             height: getVerticalSize(135.00),
-                                                             width: getHorizontalSize(136.00))
-                                                        : Image.network(widget.services['serimages'][0],
-                                                              height: getVerticalSize(135.00),
-                                                              width: getHorizontalSize(136.00))
-                                                          )))
-                                                    ])),
-                                            Padding(
-                                                padding: getPadding(
-                                                    left: 20,
-                                                    top: 30,
-                                                    bottom: 40),
-                                                child: Text(
-                                                    widget.services['sername'],
-                                                    overflow:
-                                                    TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.left,
-                                                    style: AppStyle
-                                                        .txtRobotoRomanBold34WhiteA700))
-                                          ]))))),
-                    Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Container(
-                                      margin: getMargin(left: 27, top: 10, right: 27, bottom: 9),
-                                      decoration: AppDecoration.fillBluegray200.copyWith(borderRadius: BorderRadiusStyle.circleBorder6),
-                                      child: widget.services['sid'] != FirebaseAuth.instance.currentUser!.uid ? const SizedBox()
-                                      : Row(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                                padding: getPadding(left: 6, top: 6, bottom: 7),
-                                                child:InkWell(
-                                                    onTap: (){Navigator.push(
-                                                        context, MaterialPageRoute(
-                                                        builder: (context) => EditServicePageOneScreen(services: widget.services)));},
-                                                    child: CommonImageView(imagePath: ImageConstant.imgEditing1,
-                                                    height: getSize(15.00),
-                                                    width: getSize(15.00)))
-                                                ),
-                                            Padding(
-                                                padding: getPadding(
-                                                    left: 5,
-                                                    top: 6,
-                                                    right: 4,
-                                                    bottom: 6),
-                                                child: TextButton(onPressed: (){Navigator.push(
-                                                    context, MaterialPageRoute(
-                                                    builder: (context) => EditServicePageOneScreen(services: widget.services)));},
-                                                    child: Text("lbl_edit_service".tr,
-                                                        overflow:
-                                                        TextOverflow.ellipsis,
-                                                        textAlign: TextAlign.left,
-                                                        style: AppStyle
-                                                            .txtRobotoRomanRegular12Black900))
-                                                )
-                                          ]))),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                            margin: getMargin(left: 28, top: 30, right: 28),
-                            decoration: AppDecoration.fillWhiteA700.copyWith(
-                                borderRadius: BorderRadiusStyle.circleBorder6),
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.max,
+    var size = MediaQuery.of(context).size;
+    return FutureBuilder(
+        future: serviceprovider.doc(widget.services['sid']).get(),
+        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text("Something went wrong");
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+            return SafeArea(
+                child: Scaffold(
+                    appBar: AppBar(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      leading: AppBarBackButton(),
+                    ),
+                    extendBodyBehindAppBar: true,
+                    backgroundColor: ColorConstant.gray900,
+                    body: SingleChildScrollView(
+                      child:Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              color: ColorConstant.indigoA700,
+                              child:Row(
                                 children: [
-                                  Padding(
-                                      padding:
-                                      getPadding(left: 3, top: 8, bottom: 4),
-                                      child: Text("msg_service_provider4".tr,
-                                          overflow: TextOverflow.ellipsis,
+                                  Container(
+                                      color: ColorConstant.indigoA700,
+                                      height: getVerticalSize(107.00),
+                                      width: size.width*0.3,
+                                      margin: getMargin(left: 20, top: 70, right: 12, bottom: 10),
+                                      child: widget.services['serimages'][0] == '' ? CommonImageView(
+                                          imagePath: ImageConstant.imgInsertpictureicon135x136,
+                                          height: getVerticalSize(135.00),
+                                          width: getHorizontalSize(136.00))
+                                          : Image.network(widget.services['serimages'][0],
+                                          height: getVerticalSize(135.00),
+                                          width: getHorizontalSize(136.00))
+                                  ),
+                                  Container(
+                                      padding: getPadding(left: 20, top: 70, bottom: 40),
+                                      width: size.width*0.6,
+                                      child: Text(
+                                          widget.services['sername'],
                                           textAlign: TextAlign.left,
-                                          style: AppStyle
-                                              .txtRobotoRomanRegular12Black900)),
-                                  Card(
-                                      clipBehavior: Clip.antiAlias,
-                                      elevation: 0,
-                                      margin:
-                                      getMargin(left: 29, top: 5, bottom: 5),
-                                      color: ColorConstant.lightGreen800,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadiusStyle.circleBorder9),
-                                      child: Container(
-                                          height: getVerticalSize(18.00),
-                                          width: getHorizontalSize(61.00),
-                                          decoration: AppDecoration
-                                              .fillLightgreen800
-                                              .copyWith(
-                                              borderRadius: BorderRadiusStyle
-                                                  .circleBorder9),
-                                          child: Stack(
-                                              alignment: Alignment.bottomLeft,
-                                              children: [
-                                                Align(
-                                                    alignment:
-                                                    Alignment.centerRight,
-                                                    child: Container(
-                                                        height: getVerticalSize(
-                                                            14.00),
-                                                        width: getHorizontalSize(
-                                                            13.00),
-                                                        margin: getMargin(
-                                                            left: 10,
-                                                            top: 2,
-                                                            right: 1,
-                                                            bottom: 2),
-                                                        decoration: BoxDecoration(
-                                                            color: ColorConstant
-                                                                .whiteA700,
-                                                            borderRadius:
-                                                            BorderRadius.circular(
-                                                                getHorizontalSize(
-                                                                    7.00))))),
-                                                Align(
-                                                    alignment:
-                                                    Alignment.bottomLeft,
-                                                    child: Padding(
-                                                        padding: getPadding(
-                                                            left: 4,
-                                                            top: 10,
-                                                            right: 10,
-                                                            bottom: 1),
-                                                        child: Text(
-                                                            "lbl_online".tr,
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
-                                                            textAlign:
-                                                            TextAlign.left,
+                                          style: AppStyle.txtRobotoRomanBold34WhiteA700))
+                                ],
+                              ) ,
+                            )
+                            ,
+                            Row(
+                              children: [
+                                Container(
+                                    margin: getMargin(left: 28, top: 37, right: 26,),
+                                    padding: getPadding(
+                                      left: 8, top: 7, bottom: 7,right: 8),
+                                    decoration: AppDecoration.txtFillWhiteA700.copyWith(
+                                        borderRadius: BorderRadiusStyle.txtRoundedBorder6),
+                                      child: Text(data['open'] == '' ? 'Not set yet'
+                                          : 'Operation time: ' + data['openh'].toString().padLeft(2,'0') + ':' + data['openm'].toString().padLeft(2,'0') + ' - ' +
+                                          data['closeh'].toString().padLeft(2,'0') + ':' + data['closem'].toString().padLeft(2,'0'),
+                                        maxLines: null,
+                                        textAlign: TextAlign.left,
+                                        style: AppStyle.txtRobotoRomanRegular15,),
+                                ),
+                                Align(alignment: Alignment.centerLeft,
+                                  child: widget.services['sid'] == FirebaseAuth.instance.currentUser!.uid ?
+                                    ElevatedButton.icon(
+                                    onPressed: () {Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => EditServicePageOneScreen(services: widget.services)));},
+                                    icon: Icon( // <-- Icon
+                                      Icons.edit,
+                                      color: ColorConstant.gray900,
+                                      size: 11.0,
+                                    ),
+                                    label: Text('Edit Service',
+                                      style: TextStyle(
+                                        color: ColorConstant.gray900,
+                                        fontSize: 11,
+                                        fontFamily: 'Roboto',
+                                      ),),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: ColorConstant.gray600,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                    ),// <-- Text
+                                  ):
+                                  SizedBox())
+                              ],
+                            ),
+
+                            Container(
+                              margin: getMargin(left: 28, top: 7, right: 26,),
+                              padding: getPadding(left: 8, top: 7, bottom: 7,right: 8),
+                                decoration: AppDecoration.txtFillWhiteA700
+                                    .copyWith(
+                                    borderRadius: BorderRadiusStyle
+                                        .txtRoundedBorder6),
+                                child: Text(data['location'] == '' ? 'Not yet set'
+                                    : 'Location: ' + data['location'],
+                                  maxLines: null,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle.txtRobotoRomanRegular15,),),
+                            Container(
+                              margin: getMargin(left: 28, top: 7, right: 30,),
+                              decoration: AppDecoration.fillWhiteA700.copyWith(
+                                borderRadius: BorderRadiusStyle.circleBorder6,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      margin: getMargin(left: 8, top: 7, bottom: 5,),
+                                      child: Text("msg_service_provider4".tr,
+                                        maxLines: null,
+                                        textAlign: TextAlign.left,
+                                        style: AppStyle.txtRobotoRomanRegular15,),),),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(padding: getPadding(left: 7,right: 7, bottom: 2), child:OnlineWidget(sp:data),)),
+                                ],
+                              ),
+                            ),
+                            Container(
+                                margin: getMargin(left: 28, top: 7, right: 26,),
+                                padding: getPadding(left: 8, top: 7, bottom: 7,right: 8),
+                                          decoration: AppDecoration.txtFillWhiteA700.copyWith(
+                                              borderRadius: BorderRadiusStyle.txtRoundedBorder6),
+                                          child: Text('Booking Price: RM ' + widget.services['price'].toString()+'.00',
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: AppStyle.txtRobotoRomanRegular15)
+                              ),
+                            Container(
+                                width: 320,
+                                margin:
+                                getMargin(left: 28, top: 24, right: 27, bottom: 5),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius.circular(getHorizontalSize(12.00))),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text("msg_service_description".tr,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: AppStyle.txtRobotoRomanBold16WhiteA700),
+                                      Container(
+                                          constraints: BoxConstraints(
+                                            minHeight: 70,
+                                          ),
+                                          width: double.infinity,
+                                          margin: getMargin(top: 5),
+                                          padding: getPadding(left: 8, top: 7, bottom: 7,right: 8),
+                                          decoration: AppDecoration.fillWhiteA700.copyWith(
+                                              borderRadius: BorderRadiusStyle.roundedBorder12),
+                                          child: Text(widget.services['serdesc'],
+                                                            maxLines: null,
+                                                            textAlign: TextAlign.left,
                                                             style: AppStyle
-                                                                .txtRobotoRomanRegular12)))
-                                              ])))
-                                ]))),
-                    Padding(
-                        padding: getPadding(left: 28, top: 6, right: 27),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                  padding: getPadding(
-                                      left: 2, top: 6, right: 2, bottom: 6),
-                                  decoration: AppDecoration.txtFillWhiteA700
-                                      .copyWith(
-                                      borderRadius: BorderRadiusStyle
-                                          .txtRoundedBorder6),
-                                  child: Text('Estimated Duration: ' + widget.services['duration'],
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle
-                                          .txtRobotoRomanRegular12Black900)),
-                              Container(
-                                  margin: getMargin(left: 7),
-                                  padding: getPadding(
-                                      left: 2, top: 4, right: 2, bottom: 4),
-                                  decoration: AppDecoration.txtFillWhiteA700
-                                      .copyWith(
-                                      borderRadius: BorderRadiusStyle
-                                          .txtRoundedBorder6),
-                                  child: Text('Booking Price: RM ' + widget.services['price'],
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle
-                                          .txtRobotoRomanRegular12Black900))
-                            ])),
-                    Container(
-                        width: 320,
-                        margin:
-                        getMargin(left: 28, top: 24, right: 27, bottom: 5),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                            BorderRadius.circular(getHorizontalSize(12.00))),
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                  padding: getPadding(right: 10),
-                                  child: Text("msg_service_description".tr,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle
-                                          .txtRobotoRomanBold16WhiteA700)),
-                              Container(
-                                  width: double.infinity,
-                                  margin: getMargin(top: 5),
-                                  decoration: AppDecoration.fillWhiteA700
-                                      .copyWith(
-                                      borderRadius:
-                                      BorderRadiusStyle.roundedBorder12),
-                                  child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Container(
-                                                width: getHorizontalSize(269.00),
-                                                margin: getMargin(
-                                                    left: 9,
-                                                    top: 11,
-                                                    right: 40,
-                                                    bottom: 5),
-                                                child: Text(widget.services['serdesc'],
-                                                    maxLines: null,
-                                                    textAlign: TextAlign.left,
-                                                    style: AppStyle
-                                                        .txtRobotoRomanRegular16)))
-                                      ]))
-                            ])),
-                    Padding(
-                        padding:
-                        getPadding(left: 28, top: 265, right: 28, bottom: 68),
-                        child: widget.services['sid'] == FirebaseAuth.instance.currentUser!.uid ? const SizedBox()
-                        :Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              CustomButton(
-                                  onTap: (){Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SetAppointmentScreen()));},
-                                  width: 150,
-                                  text: "lbl_book_now".tr,
-                                  variant: ButtonVariant.FillLightgreen800,
-                                  shape: ButtonShape.RoundedBorder1),
-                              CustomButton(
-                                  width: 150,
-                                  onTap: (){Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SetAppointmentScreen()));},
-                                  text: "lbl_book_later".tr,
-                                  margin: getMargin(left: 9))
-                            ]))
-                  ]),)
-            ));
+                                                                .txtRobotoRomanRegular16)
+                                    )])),
+                            Padding(
+                                padding:
+                                getPadding(left: 28, top: 70, right: 28, bottom: 68),
+                                child: widget.services['sid'] == FirebaseAuth.instance.currentUser!.uid ? const SizedBox()
+                                    :Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      CustomButton(
+                                          onTap: (){Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SetAppointmentScreen(services: widget.services, sp: data)));},
+                                          width: 150,
+                                          text: "lbl_book_now".tr,
+                                          variant: ButtonVariant.FillLightgreen800,
+                                          shape: ButtonShape.RoundedBorder20),
+                                      CustomButton(
+                                          width: 150,
+                                          onTap: (){Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SetAppointmentScreen(services: widget.services, sp: data)));},
+                                          text: "lbl_book_later".tr,
+                                          margin: getMargin(left: 9))
+                                    ]))
+                          ]),)
+                ));
+          }
+          return const Material(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ));
+        }
+        );
+    ;
   }
 }
 

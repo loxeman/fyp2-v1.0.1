@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/presentation/order_page_pending_one_page/models/order_page_complete_one_model.dart';
+import 'package:fyp2/presentation/order_page_pending_page/models/order_page_pending_model.dart';
 import 'models/order_page_pending_one_model.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ class OrderPageOngoingPage extends StatelessWidget {
       return ListView.builder(
           itemCount: snapshot.data!.docs.length,
           itemBuilder: (context, index) {
-            return OrderPageCompleteModel(
+            return OrderPageOngoingModel(
               order: snapshot.data!.docs[index],
             );
           });

@@ -58,7 +58,14 @@ class _LoginPageServiceScreen extends State<LoginPageServiceScreen> {
 
       docExists = await checkIfDocExists(user.uid);
 
+
+
     });
+  }
+
+  void navigate() {
+    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, '/navbarserviceprovider_screen');
   }
 
   late String email;

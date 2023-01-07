@@ -49,7 +49,7 @@ class OrderPagePendingModel extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Container(
                       width: getHorizontalSize(
-                        180.00,
+                        170.00,
                       ),
                       margin: getMargin(
                         left: 1,
@@ -147,47 +147,48 @@ class OrderPagePendingModel extends StatelessWidget {
                       style: AppStyle.txtRobotoRomanLight11,
                     ),
                   ),
-                  Container(
-                    width: getHorizontalSize(
-                      65.00,
-                    ),
-                    margin: getMargin(
-                      top: 4,
-                      bottom: 1,
-                    ),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "lbl_booking_price".tr,
-                            style: TextStyle(
-                              color: ColorConstant.black900,
-                              fontSize: getFontSize(
-                                11,
-                              ),
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'RM '+order['price'],
-                            style: TextStyle(
-                              color: ColorConstant.black900,
-                              fontSize: getFontSize(
-                                11,
-                              ),
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
                 ],
               ),
             ),
+            Padding(padding: getPadding(top: 25),
+              child: Container(
+              width: getHorizontalSize(
+                65.00,
+              ),
+              margin: getMargin(
+                top: 4,
+                bottom: 1,
+              ),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Booking Price \n',
+                      style: TextStyle(
+                        color: ColorConstant.black900,
+                        fontSize: getFontSize(
+                          11,
+                        ),
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'RM '+order['price'],
+                      style: TextStyle(
+                        color: ColorConstant.black900,
+                        fontSize: getFontSize(
+                          11,
+                        ),
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ))
           ],
         ),
       ),);}}

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/utils/image_constant.dart';
 import 'package:fyp2/core/utils/size_utils.dart';
@@ -13,41 +15,37 @@ class ServicePageModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: getPadding(),
-        child: Container(
-                child: Stack(
-                    children: [
-                      Container(
-                          decoration: AppDecoration.fillWhiteA700.copyWith(borderRadius: BorderRadiusStyle.circleBorder6),
-                          child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment:CrossAxisAlignment.center,
-                              mainAxisAlignment:MainAxisAlignment.start,
-                              children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child:InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => ServicePageDetailModel(
-                                                    services: services,
-                                                  )));},
-                                      child: services['serimages'][0]== '' ? CommonImageView(
-                                        imagePath: ImageConstant.imgInsertpictureicon135x136,
-                                        height: getVerticalSize(151.00),
-                                        width: getHorizontalSize(50.00))
-                                        : Image.network(services['serimages'][0],
-                                        height: getVerticalSize(151.00),
-                                        width: getHorizontalSize(50.00))),),
-                                Padding(
-                                    padding: getPadding(left: 44, top: 7, right: 44, bottom: 8),
-                                    child: Text(services['sername'],
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: AppStyle.txtRobotoRomanRegular15))
-                              ]))]))
-        );
+    return InkWell(
+      onTap: () { Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ServicePageDetailModel(services: services,
+    )));},
+      child: Padding(padding: getPadding(),
+          child: Stack(
+              children: [
+                Container(
+                    decoration: AppDecoration.fillWhiteA700.copyWith(borderRadius: BorderRadiusStyle.circleBorder9),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment:CrossAxisAlignment.center,
+                        mainAxisAlignment:MainAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(9),
+                                  topRight: Radius.circular(9)),
+                              child:Container(
+                                  constraints: const BoxConstraints(minHeight: 20, maxHeight:90),
+                                  alignment: Alignment.center,
+                                  decoration: services['serimages'][0]== ''
+                                      ? BoxDecoration(image: DecorationImage(image: FileImage(File(ImageConstant.imgInsertpictureicon135x136)),fit: BoxFit.fill))
+                                  : BoxDecoration(image: DecorationImage(image: NetworkImage(services['serimages'][0]),fit: BoxFit.fill)))),
+                          Padding(
+                              padding: getPadding(top: 7, bottom: 8),
+                              child: Text(services['sername'],
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle.txtRobotoRomanRegular15))
+                              ]))])
+        ));
   }
 }

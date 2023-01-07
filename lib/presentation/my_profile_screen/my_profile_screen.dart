@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/Tool/auth_handler.dart';
+import 'package:fyp2/Tool/online_offline.dart';
 import 'package:fyp2/presentation/edit_profile_page_screen/edit_profile_page_screen.dart';
 import 'package:fyp2/presentation/wallet_page_screen/wallet_page_screen.dart';
 import 'package:fyp2/widgets/alert_dialog.dart';
@@ -219,7 +220,7 @@ class _MyProfileScreen extends State<MyProfileScreen> {
                                             getPadding(top: 6, right: 10),
                                             child: Text(data['balance'] == ''
                                                 ? 'RM 0.00'
-                                                : ('RM ') + data['balance'],
+                                                : ('RM ') + data['balance'].toString() + '.00',
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.left,
                                                 style: AppStyle
@@ -316,7 +317,8 @@ class _MyProfileScreen extends State<MyProfileScreen> {
                                               height: getSize(24.00),
                                               width: getSize(24.00))))
                                 ]))),
-                    CustomButton(
+                    Padding(padding: getPadding(bottom: 40),
+                    child: CustomButton(
                       width: 200,
                       text: "lbl_log_out".tr,
                       margin:
@@ -333,14 +335,9 @@ class _MyProfileScreen extends State<MyProfileScreen> {
                               Navigator.pop(context);
                             },
                             tabYes: () async {
-                              await AuthRepo.logOut();
-
-                              await Future.delayed(
-                                  const Duration(
-                                      microseconds:
-                                      100))
+                              await AuthRepo.logOut()
                                   .whenComplete(() {
-                                    Navigator.pop(context);
+                                Navigator.pop(context);
                                 Navigator
                                     .pushReplacementNamed(
                                     context,
@@ -348,7 +345,7 @@ class _MyProfileScreen extends State<MyProfileScreen> {
                               });
                             });
                       },
-                    )
+                    ))
                   ]) ,
             ),
     );}

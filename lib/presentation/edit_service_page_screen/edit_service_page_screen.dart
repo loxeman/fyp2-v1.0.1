@@ -20,9 +20,8 @@ class EditServicePageScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              elevation: 0,
               backgroundColor: ColorConstant.gray900,
-              leading: const AppBarBackButton(),
+              automaticallyImplyLeading: false,
               centerTitle: true,
               title: const AppBarTitle(title: 'Manage Services',),
             ),
@@ -39,48 +38,68 @@ class EditServicePageScreen extends StatelessWidget {
               backgroundColor: ColorConstant.indigoA700,
             ),
             backgroundColor: ColorConstant.gray900,
-            body: StreamBuilder<QuerySnapshot>(
-              stream: _prodcutsStream,
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return const Text('Something went wrong');
-                }
+            body: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+               Align(
+                 alignment: Alignment.center,
+                 child:
+                 Container(
+                   margin: getMargin(top: 27),
+                   width: MediaQuery.of(context).size.width * 0.9,
+                   child: StreamBuilder<QuerySnapshot>(
+                     stream: _prodcutsStream,
+                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                       if (snapshot.hasError) {
+                         return const Text('Something went wrong');
+                       }
 
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+                       if (snapshot.connectionState == ConnectionState.waiting) {
+                         return const Center(
+                           child: CircularProgressIndicator(),
+                         );
+                       }
 
-                if (snapshot.data!.docs.isEmpty) {
-                  return const Center(
-                      child: Text(
-                        'This store \n\n has no service yet !',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 26,
-                            color: Colors.blueGrey,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Acme',
-                            letterSpacing: 1.5),
-                      )
-                  );
-                }
+                       if (snapshot.data!.docs.isEmpty) {
+                         return const Center(
+                             child: Text(
+                               'This store \n\n has no service yet !',
+                               textAlign: TextAlign.center,
+                               style: TextStyle(
+                                   fontSize: 26,
+                                   color: Colors.blueGrey,
+                                   fontWeight: FontWeight.bold,
+                                   fontFamily: 'Roboto',
+                                   letterSpacing: 1.5),
+                             )
+                         );
+                       }
 
-                return SingleChildScrollView(
-                  child: GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        return ServicePageModel(
-                          services: snapshot.data!.docs[index],
-                        );
-                      },
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),),
-                );
-              },
-            ),));
+                       return SingleChildScrollView(
+                         child: GridView.builder(
+                           physics: const NeverScrollableScrollPhysics(),
+                           shrinkWrap: true,
+                           //padding: getPadding(left: 30,right: 30, top: 10),
+                           itemCount: snapshot.data!.docs.length,
+                           itemBuilder: (context, index) {
+                             return ServicePageModel(
+                               services: snapshot.data!.docs[index],
+                             );
+                           },
+                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                               crossAxisCount: 2,
+                               crossAxisSpacing: 10),),
+                       );
+                     },
+                   ),
+                 ) ,
+               )
+
+
+            ],)
+            ));
   }
 
 }

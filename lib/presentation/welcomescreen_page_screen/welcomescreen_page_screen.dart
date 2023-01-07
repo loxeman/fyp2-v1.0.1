@@ -20,7 +20,7 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Padding(
                 padding: getPadding(
                   left: 41,
@@ -28,7 +28,7 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
                   right: 41,
                 ),
                 child: Text(
-                  "msg_hi_welcome_to".tr,
+                  'Hi, Welcome',
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: AppStyle.txtRobotoRomanMedium40.copyWith(

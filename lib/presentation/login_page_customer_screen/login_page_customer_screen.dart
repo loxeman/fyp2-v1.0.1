@@ -65,10 +65,10 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
 
       docExists == false
           ? await customers.doc(user.uid).set({
-        'name': user.displayName,
+        'fname': user.displayName,
         'email': user.email,
-        'profileimage': user.photoURL,
-        'phone': '',
+        'image': user.photoURL,
+        'mobile': '',
         'address': '',
         'cid': user.uid
       }).then((value) => navigate())
@@ -99,7 +99,6 @@ class _LoginPageCustomerScreen extends State<LoginPageCustomerScreen>{
         await AuthRepo.reloadUserData();
         if (await AuthRepo.checkEmailVerification()) {
           _formKey.currentState!.reset();
-
           navigate();
         } else {
           MyMessageHandler.showSnackBar(

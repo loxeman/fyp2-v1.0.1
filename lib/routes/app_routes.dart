@@ -16,8 +16,6 @@ import 'package:fyp2/presentation/sign_up_page_service_screen/sign_up_page_servi
 import 'package:fyp2/presentation/sign_up_page_service_screen/binding/sign_up_page_service_binding.dart';
 import 'package:fyp2/presentation/search_screen/search_screen.dart';
 import 'package:fyp2/presentation/search_screen/binding/search_binding.dart';
-import 'package:fyp2/presentation/serviice_provider_page_screen/serviice_provider_page_screen.dart';
-import 'package:fyp2/presentation/serviice_provider_page_screen/binding/serviice_provider_page_binding.dart';
 import 'package:fyp2/presentation/service_provider_homepage_screen/service_provider_homepage_screen.dart';
 import 'package:fyp2/presentation/service_provider_homepage_screen/binding/service_provider_homepage_binding.dart';
 import 'package:fyp2/presentation/my_profile_screen/my_profile_screen.dart';
@@ -30,8 +28,6 @@ import 'package:fyp2/presentation/wallet_page_screen/wallet_page_screen.dart';
 import 'package:fyp2/presentation/wallet_page_screen/binding/wallet_page_binding.dart';
 import 'package:fyp2/presentation/serviie_provider_page_available_screen/serviie_provider_page_available_screen.dart';
 import 'package:fyp2/presentation/serviie_provider_page_available_screen/binding/serviie_provider_page_available_binding.dart';
-import 'package:fyp2/presentation/serviice_provider_page_available_screen/serviice_provider_page_available_screen.dart';
-import 'package:fyp2/presentation/serviice_provider_page_available_screen/binding/serviice_provider_page_available_binding.dart';
 import 'package:fyp2/presentation/category_page_screen/category_page_screen.dart';
 import 'package:fyp2/presentation/category_page_screen/binding/category_page_binding.dart';
 import 'package:fyp2/presentation/edit_store_page_screen/edit_store_page_screen.dart';
@@ -134,7 +130,7 @@ class AppRoutes {
     ),
     GetPage(
       name: navbarserviceprovider,
-      page: () => NavbarServiceProviderPage(),
+      page: () => NavbarServiceProviderPage(selectedindex: 0,),
       bindings: [
         NavbarBinding(),
       ],
@@ -196,13 +192,6 @@ class AppRoutes {
       ],
     ),
     GetPage(
-      name: serviiceProviderPageScreen,
-      page: () => ServiiceProviderPageScreen(),
-      bindings: [
-        ServiiceProviderPageBinding(),
-      ],
-    ),
-    GetPage(
       name: serviceProviderHomepageScreen,
       page: () => ServiceProviderHomepageScreen(suppId: FirebaseAuth.instance.currentUser!.uid),
       bindings: [
@@ -246,13 +235,6 @@ class AppRoutes {
       ],
     ),
     GetPage(
-      name: serviiceProviderPageAvailableScreen,
-      page: () => ServiiceProviderPageAvailableScreen(),
-      bindings: [
-        ServiiceProviderPageAvailableBinding(),
-      ],
-    ),
-    GetPage(
       name: categoryPageScreen,
       page: () => CategoryPageScreen(),
       bindings: [
@@ -291,7 +273,7 @@ class AppRoutes {
     ),
     GetPage(
       name: setAppointmentScreen,
-      page: () => SetAppointmentScreen(),
+      page: () => SetAppointmentScreen(services: null, sp: null,),
       bindings: [
         SetAppointmentBinding(),
       ],

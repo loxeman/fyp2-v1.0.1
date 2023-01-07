@@ -37,6 +37,19 @@ dependencies:
   flutter_login_facebook: ^1.6.2
   intl: ^0.17.0
   firebase_database: ^10.0.7
+  url_launcher: ^6.1.7
+  carousel_slider: ^4.2.1
+  google_maps_flutter: ^2.2.2
+  #geolocator: ^6.1.2
+  date_time_picker: ^2.1.0
+  geocoding: ^2.0.1
+  flutter_google_places_hoc081098: ^1.1.0
+  google_api_headers: ^1.1.1
+  google_maps_webservice: ^0.0.20-nullsafety.5
+  map_location_picker: ^1.0.2
+  day_picker: ^2.1.1
+
+
 dev_dependencies: 
   flutter_test: 
     sdk: flutter

@@ -61,7 +61,11 @@ class _SignUpPageServiceScreen extends State<SignUpPageServiceScreen> {
             'open': '',
             'close': '',
             'status' : 'online',
-            'desc' : ''
+            'desc' : '',
+            'start' : '',
+            'last': '',
+            'storelogo':'',
+            'autostatus': 1,
 
           });
           _formKey.currentState!.reset();

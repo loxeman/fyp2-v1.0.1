@@ -33,7 +33,7 @@ final Map<String, String> enUs = {
   "lbl_location": "Location",
   "lbl_hello": "Hello,",
   "msg_location_ss177":
-      "Location: SS177, Taman Sri Gombak, Kuala  \n                  Lumpur",
+      "Location: SS177, Taman Sri Gombak, Kuala Lumpur",
   "lbl_username": "Username",
   "lbl_wallet_balance": "Wallet Balance",
   "msg_booking_price_rm50_00": "Booking Price \nRM50.00",

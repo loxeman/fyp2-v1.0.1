@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fyp2/Tool/online_offline.dart';
 import 'package:fyp2/presentation/edit_store_page_screen/edit_store_page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/app_export.dart';
 import 'package:fyp2/presentation/serviie_provider_page_available_screen/models/service_page_model.dart';
+import 'package:fyp2/widgets/online_widget.dart';
 
 class ServiceProviderHomepageScreen extends StatefulWidget {
   final String suppId;
@@ -18,12 +18,6 @@ class _ServiceProviderHomepageScreen extends State<ServiceProviderHomepageScreen
 
   CollectionReference services =
   FirebaseFirestore.instance.collection('service-provider');
-
-  @override
-  void initState() {
-    super.initState();
-    UserPresence().UpdatePresence();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,165 +37,110 @@ class _ServiceProviderHomepageScreen extends State<ServiceProviderHomepageScreen
       if (snapshot.connectionState == ConnectionState.done) {
         Map<String, dynamic> data =
         snapshot.data!.data() as Map<String, dynamic>;
-        return SafeArea(
-          child: Scaffold(
+      return SafeArea(
+        child: Scaffold(
             backgroundColor: ColorConstant.gray900,
-            body: SingleChildScrollView(
-              child:Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              elevation: 0,
+              toolbarHeight: 100,
+              flexibleSpace: data['coverimage'] == ''
+                  ? Container(color: ColorConstant.indigoA700,)
+                  : Image.network(
+                data['coverimage'],
+                fit: BoxFit.cover,
+              ),
+              title: Row(
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      height: getVerticalSize(
-                        185.00,
-                      ),
-                      width: size.width,
-                      decoration: AppDecoration.fillIndigoA700,
-                      child: Stack(
-                        alignment: Alignment.bottomLeft,
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              width: 82,
-                              height: 36,
-                              margin: getMargin(
-                                left: 27,
-                                top: 10,
-                                right: 10,
-                                bottom: 10,
-                              ),
-                              decoration: AppDecoration.fillBluegray200.copyWith(
-                                borderRadius: BorderRadiusStyle.circleBorder6,
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding: getPadding(
-                                      left: 7,
-                                      top: 6,
-                                      bottom: 7,
-                                    ),
-                                    child: InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditStorePageScreen()));
-                                        },
-                                        child: CommonImageView(
-                                          imagePath: ImageConstant.imgEditing1,
-                                          height: getSize(
-                                            15.00,
-                                          ),
-                                          width: getSize(
-                                            15.00,
-                                          ),)
-
-                                    ),
-                                  ),
-                                  Padding(
-                                      padding: getPadding(
-                                        top: 6,
-                                        bottom: 6,
-                                      ),
-                                      child: TextButton(onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditStorePageScreen()));
-                                      },
-                                        child: Text(
-                                          "lbl_edit_store".tr,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.left,
-                                          style: AppStyle
-                                              .txtRobotoRomanRegular12Black900,
-                                        ),)
-
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: getPadding(
-                                left: 13,
-                                top: 10,
-                                right: 13,
-                                bottom: 10,
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    height: getVerticalSize(
-                                      135.00,
-                                    ),
-                                    width: getHorizontalSize(
-                                      136.00,
-                                    ),
-                                    child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: data['storelogo'] == '' ? CommonImageView(
-                                            imagePath: ImageConstant.imgInsertpictureicon135x136,
-                                            height: getVerticalSize(135.00,),
-                                            width: getHorizontalSize(136.00,),
-                                          )
-                                          : Image.network(data['storelogo'],
-                                            height: getVerticalSize(135.00,),
-                                            width: getHorizontalSize(136.00,),)
-                                        ),
-                                  ),
-                                  Container(
-                                    width: getHorizontalSize(
-                                      115.00,
-                                    ),
-                                    margin: getMargin(
-                                      left: 20,
-                                      top: 12,
-                                      bottom: 49,
-                                    ),
-                                    child: Text(
-                                      data['storename'],
-                                      maxLines: null,
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle.txtRobotoRomanBold24,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                  Container(
+                    height: 80,
+                    width: 80,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 4, color: ColorConstant.gray900),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(11),
+                      child: data['storelogo'] == '' ? CommonImageView(
+                          imagePath: ImageConstant.imgInsertpictureicon85x82,fit: BoxFit.cover)
+                          :Image.network(
+                        data['storelogo'],
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   Container(
-                      width: 320,
-                      margin: getMargin(left: 28, top: 23, right: 27,),
-                      decoration: AppDecoration.fillWhiteA700.copyWith(
-                        borderRadius: BorderRadiusStyle.circleBorder6,),
-                      child: Text(
-                          data['open'] == '' ? 'Not set yet'
-                              : 'Operation time: ' + data['open'] + ' - ' +
-                              data['close'],
-                          textAlign: TextAlign.left,
-                          style: AppStyle.txtRobotoRomanRegular15
-                      )
-                  ),
+                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            data['storename'].toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: getMargin(left: 28, top: 37, right: 27,),
+                        decoration: AppDecoration.fillWhiteA700.copyWith(
+                          borderRadius: BorderRadiusStyle.circleBorder6,),
+                        child:Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                              margin: getMargin(left: 8, top: 7, bottom: 5,),
+                              child: Padding(padding: getPadding(right: 7),
+                                child: Text(data['openh'] == null ? 'Not set yet'
+                                    : 'Operation time: ' +
+                                    data['openh'].toString().padLeft(2,'0') + ':' + data['openm'].toString().padLeft(2,'0') + ' - ' +
+                                    data['closeh'].toString().padLeft(2,'0') + ':' + data['closem'].toString().padLeft(2,'0'),
+                                  maxLines: null,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle.txtRobotoRomanRegular15,),)
+                          ),),
+                      ),
+                      Align(alignment: Alignment.centerLeft,
+                        child: ElevatedButton.icon(
+                          onPressed: () {Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => EditStorePageScreen()));},
+                          icon: Icon( // <-- Icon
+                            Icons.edit,
+                            color: ColorConstant.gray900,
+                            size: 11.0,
+                          ),
+                          label: Text('Edit Store',
+                            style: TextStyle(
+                              color: ColorConstant.gray900,
+                              fontSize: 11,
+                              fontFamily: 'Roboto',
+                            ),),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: ColorConstant.gray600,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          ),// <-- Text
+                        ),)
+                    ],),
                   Container(
-                    width: 320,
                     margin: getMargin(left: 28, top: 7, right: 27,),
                     decoration: AppDecoration.fillWhiteA700.copyWith(
                       borderRadius: BorderRadiusStyle.circleBorder6,
@@ -214,9 +153,7 @@ class _ServiceProviderHomepageScreen extends State<ServiceProviderHomepageScreen
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            width: getHorizontalSize(60.00,),
-                            margin: getMargin(
-                              left: 8, top: 7, right: 25, bottom: 5,),
+                            margin: getMargin(left: 8, top: 7, bottom: 5,),
                             child: Text('Location: ',
                               maxLines: null,
                               textAlign: TextAlign.left,
@@ -224,8 +161,7 @@ class _ServiceProviderHomepageScreen extends State<ServiceProviderHomepageScreen
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            margin: getMargin(
-                              left: 8, top: 7, right: 7, bottom: 5,),
+                            margin: getMargin(top: 7, right: 7, bottom: 5,),
                             child: Text(data['location'] == '' ? 'Not yet set'
                                 : data['location'],
                               maxLines: null,
@@ -234,161 +170,31 @@ class _ServiceProviderHomepageScreen extends State<ServiceProviderHomepageScreen
                       ],
                     ),
                   ),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          margin: getMargin(left: 28, top: 30, right: 28),
-                          decoration: AppDecoration.fillWhiteA700.copyWith(
-                              borderRadius: BorderRadiusStyle.circleBorder6),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                    padding:
-                                    getPadding(left: 3, top: 8, bottom: 4),
-                                    child: Text("msg_service_provider4".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: AppStyle
-                                            .txtRobotoRomanRegular12Black900)),
-                                Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    elevation: 0,
-                                    margin:
-                                    getMargin(left: 29, top: 5, bottom: 5),
-                                    color: ColorConstant.lightGreen800,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadiusStyle.circleBorder9),
-                                    child: Container(
-                                        height: getVerticalSize(18.00),
-                                        width: getHorizontalSize(61.00),
-                                        decoration: AppDecoration
-                                            .fillLightgreen800
-                                            .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .circleBorder9),
-                                        child: Stack(
-                                            alignment: Alignment.bottomLeft,
-                                            children: [
-                                              Align(
-                                                  alignment:
-                                                  Alignment.centerRight,
-                                                  child: Container(
-                                                      height: getVerticalSize(
-                                                          14.00),
-                                                      width: getHorizontalSize(
-                                                          13.00),
-                                                      margin: getMargin(
-                                                          left: 10,
-                                                          top: 2,
-                                                          right: 1,
-                                                          bottom: 2),
-                                                      decoration: BoxDecoration(
-                                                          color: ColorConstant
-                                                              .whiteA700,
-                                                          borderRadius:
-                                                          BorderRadius.circular(
-                                                              getHorizontalSize(
-                                                                  7.00))))),
-                                              Align(
-                                                  alignment:
-                                                  Alignment.bottomLeft,
-                                                  child: Padding(
-                                                      padding: getPadding(
-                                                          left: 4,
-                                                          top: 10,
-                                                          right: 10,
-                                                          bottom: 1),
-                                                      child: Text(
-                                                          "lbl_online".tr,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          textAlign:
-                                                          TextAlign.left,
-                                                          style: AppStyle
-                                                              .txtRobotoRomanRegular12)))
-                                            ])))
-                              ]))),
-                  /*Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      margin: getMargin(left: 28, top: 8, right: 28,),
-                      decoration: AppDecoration.fillWhiteA700.copyWith(
-                        borderRadius: BorderRadiusStyle.circleBorder6,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: getPadding(
-                              left: 4, top: 4, bottom: 5,),
-                            child: Text(
-                              "lbl_current_status".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtRobotoRomanRegular15,
-                            ),
-                          ),
-                          Container(
-                            margin: getMargin(
-                              left: 7,
-                              top: 5,
-                              bottom: 5,
-                            ),
-                            decoration: AppDecoration.fillGray700.copyWith(
-                              borderRadius: BorderRadiusStyle.circleBorder9,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  height: getSize(
-                                    14.00,
-                                  ),
-                                  width: getSize(
-                                    14.00,
-                                  ),
-                                  margin: getMargin(
-                                    left: 1,
-                                    top: 2,
-                                    bottom: 2,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: ColorConstant.whiteA700,
-                                    borderRadius: BorderRadius.circular(
-                                      getHorizontalSize(
-                                        7.00,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    left: 1,
-                                    top: 2,
-                                    right: 3,
-                                    bottom: 1,
-                                  ),
-                                  child: Text(
-                                    "lbl_offline".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: AppStyle.txtRobotoRomanRegular12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ), //Todo online widget
-                        ],
-                      ),
+                  Container(
+                    margin: getMargin(left: 28, top: 7, right: 27,),
+                    decoration: AppDecoration.fillWhiteA700.copyWith(
+                      borderRadius: BorderRadiusStyle.circleBorder6,
                     ),
-                  ),*/                  Container(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: getMargin(left: 8, top: 7, bottom: 5,),
+                            child: Text("msg_service_provider4".tr,
+                              maxLines: null,
+                              textAlign: TextAlign.left,
+                              style: AppStyle.txtRobotoRomanRegular15,),),),
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(padding: getPadding(left: 7,right: 7, bottom: 2), child: OnlineWidget(sp:data),)),
+                      ],
+                    ),
+                  ),
+                  Container(
                     width: double.infinity,
                     margin: getMargin(left: 28, top: 24, right: 27,),
                     decoration: BoxDecoration(
@@ -406,18 +212,15 @@ class _ServiceProviderHomepageScreen extends State<ServiceProviderHomepageScreen
                           child: Text(
                             "msg_service_description".tr,
                             overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
+                            textAlign: TextAlign.justify,
                             style: AppStyle.txtRobotoRomanBold16WhiteA700,
                           ),
                         ),
                         Container(
                           width: double.infinity,
-                          margin: getMargin(
-                            top: 5,
-                          ),
+                          margin: getMargin(top: 5,),
                           decoration: AppDecoration.fillWhiteA700.copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder12,
-                          ),
+                            borderRadius: BorderRadiusStyle.roundedBorder12,),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -427,18 +230,18 @@ class _ServiceProviderHomepageScreen extends State<ServiceProviderHomepageScreen
                                 alignment: Alignment.centerLeft,
                                 child: Container(
                                   width: getHorizontalSize(
-                                    269.00,
+                                    320,
                                   ),
                                   margin: getMargin(
                                     left: 9,
                                     top: 11,
-                                    right: 40,
+                                    right: 9,
                                     bottom: 15,
                                   ),
                                   child: Text(data['desc'] == '' ? 'Not yet set'
                                       : data['desc'],
                                     maxLines: null,
-                                    textAlign: TextAlign.left,
+                                    textAlign: TextAlign.justify,
                                     style: AppStyle.txtRobotoRomanRegular16,
                                   ),
                                 ),
@@ -500,9 +303,12 @@ class _ServiceProviderHomepageScreen extends State<ServiceProviderHomepageScreen
                             child: GridView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
+                              padding: getPadding(left: 30,right: 30, top: 10),
                               itemCount: snapshot.data!.docs.length,
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                              ),
                               itemBuilder: (context, index) {
                                 return ServicePageModel(
                                   services: snapshot.data!.docs[index],);
@@ -513,10 +319,9 @@ class _ServiceProviderHomepageScreen extends State<ServiceProviderHomepageScreen
                 ],
               ),
             )
-
-          ),
-        );
-      }
+        ),
+      );
+    }
       return const Material(
           child: Center(
             child: CircularProgressIndicator(),

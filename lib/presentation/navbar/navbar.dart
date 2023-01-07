@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp2/Tool/online_offline.dart';
 import 'package:fyp2/presentation/home_screen/home_screen.dart';
 import 'package:fyp2/presentation/my_profile_screen/my_profile_screen.dart';
 import 'package:fyp2/presentation/order_page_pending_page/Order_page.dart';
@@ -14,6 +15,13 @@ class NavbarCustomerPage extends StatefulWidget {
 }
 
 class _NavbarCustomerPageState extends State<NavbarCustomerPage> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+
   void _navigateBottomBar(int index){
     setState(() {
       widget.selectedindex=index;

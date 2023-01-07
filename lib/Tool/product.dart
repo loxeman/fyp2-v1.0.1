@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp2/presentation/serviice_provider_page_available_screen/serviice_provider_page_available_screen.dart';
+import 'package:fyp2/presentation/serviie_provider_page_available_screen/models/service_page_detail_model.dart';
 
 class ProductModel extends StatefulWidget {
   final dynamic products;
@@ -20,7 +20,7 @@ class _ProductModelState extends State<ProductModel> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ServiiceProviderPageAvailableScreen()));
+                builder: (context) => ServicePageDetailModel(services: widget.products)));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

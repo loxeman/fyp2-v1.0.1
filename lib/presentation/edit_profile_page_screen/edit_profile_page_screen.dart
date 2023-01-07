@@ -79,9 +79,16 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
         'lname' : lname,
         'mobile': mobile,
         'address': address,
+        'image' : image,
       });
-    }).whenComplete(() {Navigator.pop(context);
-      Navigator.pushReplacementNamed(context, '/my_profile_screen');
+    }).whenComplete(() {
+      setState(() {
+        processing = false;
+        imageFile = null;
+        image = '';
+        _formKey.currentState?.reset();
+      });
+      Navigator.pop(context,true);
     });
   }
 
@@ -91,7 +98,7 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
       setState(() {
         processing = true;
       });
-      await editProfileData();
+      await await uploadProfilePicture().whenComplete(() async => editProfileData());
       //Navigator.pop(context);
     } else {
       MyMessageHandler.showSnackBar(scaffoldKey, 'please fill all fields');
@@ -122,10 +129,10 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
                             child: Padding(
                               padding: getPadding( top: 17),
                               child:
-                              CircleAvatar(
-                                radius: 31.5,
-                                backgroundImage: NetworkImage(
-                                    widget.data['image']),),)),
+                                  imageFile != null ? CircleAvatar(radius: 31.5,
+                                      backgroundImage: FileImage(File(imageFile!.path)))
+                              : showImage(image: widget.data['image']),
+                              )),
                         CustomButton(
                           width: 163,
                           text: "lbl_change_picture".tr,
@@ -134,14 +141,7 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
                           padding: ButtonPadding.PaddingAll12,
                           fontStyle: ButtonFontStyle.RobotoRomanRegular16,
                           alignment: Alignment.center,
-                          onTap: (){pickProfilePicture().whenComplete(() async =>
-                          await uploadProfilePicture().whenComplete((){Navigator.pop(context);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                              builder: (context) =>
-                              EditProfilePageScreen(data: widget.data)));
-                          }));},),
+                          onTap: (){pickProfilePicture();},),
                         Align(
                             alignment: Alignment.center,
                             child: Container(
@@ -317,4 +317,31 @@ class _EditProfilePageScreen extends State<EditProfilePageScreen> {
                       ])),)
             ));
   }
+}
+
+class showImage extends StatelessWidget{
+
+  final String image;
+
+  showImage({Key? key, required this.image}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+
+    if (image == ''){
+      return CommonImageView(
+          imagePath: ImageConstant.imgUser2,
+          height: getSize(63.00),
+          width: getSize(63.00));
+    }
+
+    else{
+    return CircleAvatar(
+    radius: 31.5,
+    backgroundImage: NetworkImage(image));
+    }
+
+  }
+
 }

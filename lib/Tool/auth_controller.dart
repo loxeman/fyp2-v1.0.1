@@ -123,7 +123,7 @@ class AuthController extends GetxController{
 
   void logOut()async{
     try {
-    await auth.signOut();
+      await auth.signOut();
     } on FirebaseAuthException catch (e) {
     print(e.toString());
     }

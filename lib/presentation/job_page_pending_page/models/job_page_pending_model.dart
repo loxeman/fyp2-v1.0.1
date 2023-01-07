@@ -52,7 +52,7 @@ class JobPagePendingModel extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Container(
                       width: getHorizontalSize(
-                        180.00,
+                        170.00,
                       ),
                       margin: getMargin(
                         left: 1,
@@ -153,36 +153,40 @@ class JobPagePendingModel extends StatelessWidget {
                 ],
               ),
             ),
-            CustomButton(
-              width: 62,
-              text: "lbl_accept".tr,
-              onTap: ()async {
-                await FirebaseFirestore.instance
-                    .collection('order')
-                    .doc(order['orderid'])
-                    .update({
-                  'status': 'ongoing',
-                });
-              },
-              margin: getMargin(
-                left: 10,
-                top: 2,
-              ),
-              shape: ButtonShape.CircleBorder12,
-              padding: ButtonPadding.PaddingAll3,
-              fontStyle: ButtonFontStyle.RobotoRomanMedium10,
-            ),
-            CustomButton(
-              width: 62,
-              text: "lbl_reject".tr,
-              onTap: () => FirebaseFirestore.instance.runTransaction((transaction)
-              async => await transaction.delete(order)),
-              margin: getMargin(left: 10, top: 2,),
-              variant: ButtonVariant.FillRed900,
-              shape: ButtonShape.CircleBorder12,
-              padding: ButtonPadding.PaddingAll3,
-              fontStyle: ButtonFontStyle.RobotoRomanMedium10,
-            ),
+            Column(
+              children: [
+                CustomButton(
+                  width: 62,
+                  text: "lbl_accept".tr,
+                  onTap: ()async {
+                    await FirebaseFirestore.instance
+                        .collection('order')
+                        .doc(order['orderid'])
+                        .update({
+                      'status': 'ongoing',
+                    });
+                  },
+                  margin: getMargin(
+                    top: 15,
+                  ),
+                  shape: ButtonShape.CircleBorder12,
+                  padding: ButtonPadding.PaddingAll3,
+                  fontStyle: ButtonFontStyle.RobotoRomanMedium10,
+                ),
+                CustomButton(
+                  width: 62,
+                  text: "lbl_reject".tr,
+                  onTap: () => FirebaseFirestore.instance.runTransaction((transaction)
+                  async => await transaction.delete(order)),
+                  margin: getMargin( top: 10,),
+                  variant: ButtonVariant.FillRed900,
+                  shape: ButtonShape.CircleBorder12,
+                  padding: ButtonPadding.PaddingAll3,
+                  fontStyle: ButtonFontStyle.RobotoRomanMedium10,
+                ),],
+            )
+
+
           ],
         ),
       ),);}}

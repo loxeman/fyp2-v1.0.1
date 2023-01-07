@@ -1,14 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fyp2/Tool/appbar_widgets.dart';
 import 'package:fyp2/presentation/search_screen/models/search_screen_model.dart';
-
-import '../search_screen/widgets/search_screen_item_widget.dart';
 import 'controller/search_controller.dart';
-import 'models/search_screen_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp2/core/app_export.dart';
-import 'package:fyp2/widgets/custom_button.dart';
 import 'package:fyp2/widgets/custom_drop_down.dart';
 import 'package:fyp2/widgets/custom_text_form_field.dart';
 
@@ -158,8 +152,7 @@ class _SearchScreen extends State<SearchScreen> {
     }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-              child: CircularProgressIndicator(),
-    );
+              child: CircularProgressIndicator(),);
     }
             if (snapshot.data!.docs.isEmpty) {
               return const Center(
@@ -169,15 +162,12 @@ class _SearchScreen extends State<SearchScreen> {
                       fontFamily: 'RobotoRoman',
                       fontSize: 26,
                       letterSpacing: 1.5,
-                      color: Colors.white,
-    ),));
+                      color: Colors.white,),));
     }
               else return ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  return SearchPageModel(
-                  services: snapshot.data!.docs[index],
-    );
+                  return SearchPageModel(services: snapshot.data!.docs[index],);
     });
     },),
 

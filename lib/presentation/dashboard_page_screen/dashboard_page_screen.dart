@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp2/Tool/appbar_widgets.dart';
+import 'package:fyp2/Tool/auth_controller.dart';
 import 'package:fyp2/Tool/auth_handler.dart';
+import 'package:fyp2/Tool/online_offline.dart';
 import 'package:fyp2/presentation/edit_service_page_screen/edit_service_page_screen.dart';
 import 'package:fyp2/presentation/edit_store_page_screen/edit_store_page_screen.dart';
 import 'package:fyp2/presentation/job_page_pending_page/job_page.dart';
+import 'package:fyp2/presentation/navbar_serviceprovider/navbar_serviceprovider.dart';
 import 'package:fyp2/presentation/service_provider_homepage_screen/service_provider_homepage_screen.dart';
 import 'package:fyp2/presentation/wallet_page_screen/wallet_page_screen.dart';
 import 'package:fyp2/widgets/alert_dialog.dart';
@@ -14,9 +17,9 @@ import 'package:fyp2/widgets/custom_button.dart';
 
 List<String> label = [
   'my store',
-  'orders',
+  'jobs',
   'edit profile',
-  'manage services',
+  'manage\nservices',
   'balance',
 ];
 
@@ -29,10 +32,10 @@ List<IconData> icons = [
 ];
 
 List<Widget> pages = [
-  ServiceProviderHomepageScreen(suppId: FirebaseAuth.instance.currentUser!.uid),
-  const JobPage(),
+  NavbarServiceProviderPage(selectedindex: 0,),
+  NavbarServiceProviderPage(selectedindex: 1,),
   const EditStorePageScreen(),
-  EditServicePageScreen(),
+  NavbarServiceProviderPage(selectedindex: 2,),
   WalletPageScreen(),
 ];
 
@@ -60,18 +63,10 @@ class DashboardPageScreen extends GetWidget<DashboardPageController> {
                           Navigator.pop(context);
                         },
                         tabYes: () async {
-                          await AuthRepo.logOut();
-
-                          await Future.delayed(
-                              const Duration(
-                                  microseconds:
-                                  100))
-                              .whenComplete(() {
-                            Navigator.pop(context);
-                            Navigator
-                                .pushReplacementNamed(
-                                context,
-                                '/Welcome_page_screen');
+                          await AuthRepo.logOut()
+                              .whenComplete(() {Navigator.pop(context);
+                            Navigator.pushReplacementNamed(
+                                context, '/Welcome_page_screen');
                           });
                         });
                   },
@@ -83,7 +78,7 @@ class DashboardPageScreen extends GetWidget<DashboardPageController> {
             body:
              Padding(
                  padding: getPadding(
-                     left: 14, top: 24, right: 14, bottom: 24),
+                     left: 10, top: 10, right: 10, bottom: 10),
                  child: GridView.count(
                    mainAxisSpacing: 7,
                    crossAxisSpacing: 7,
@@ -106,6 +101,7 @@ class DashboardPageScreen extends GetWidget<DashboardPageController> {
                                color: ColorConstant.indigoA700,),
                              Text(
                                label[index].toUpperCase(),
+                               textAlign: TextAlign.center,
                                style: const TextStyle(
                                    fontSize: 12,
                                    color: Colors.indigo,
